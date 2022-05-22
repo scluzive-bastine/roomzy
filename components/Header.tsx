@@ -34,7 +34,7 @@ const Header = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="rounded px-4 py-2 text-lg outline-none transition duration-150 ease-in-out hover:bg-gray-200">
+          <button className="rounded px-4 py-2 text-lg outline-none transition duration-150 ease-in-out hover:bg-gray-200 ">
             <FiSearch />
           </button>
           <button className="hidden items-center space-x-2 rounded bg-[#fa6932] px-4 py-2 text-sm text-white transition duration-150 ease-in-out hover:bg-[#db5c2a] md:flex">
