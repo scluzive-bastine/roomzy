@@ -8,7 +8,7 @@ export default function Layout({ children }) {
         <title>Traveling and Booking simplified </title>
       </Head>
       <Header />
-      <main className="relative">{children}</main>
+      <main>{children}</main>
     </>
   )
 }

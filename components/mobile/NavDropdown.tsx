@@ -10,7 +10,7 @@ interface ToggleMenuProps {
 
 const NavDropdown = ({ toggleShow }: ToggleMenuProps) => {
   return (
-    <div className="absolute top-0 left-0 block h-screen w-full bg-white py-4 md:hidden">
+    <div className="absolute top-0 left-0 z-50 block h-auto  w-full bg-white py-4 md:hidden">
       <div className="relative">
         <div className="flex justify-between px-4">
           <Image src={logo} width="100%" height="40px" />
@@ -33,7 +33,7 @@ const NavDropdown = ({ toggleShow }: ToggleMenuProps) => {
             <Link href="/">Nearby</Link>
           </li>
         </ul>
-        <div className="fixed bottom-0 flex w-full justify-center border-t border-gray-200 py-4">
+        <div className="mt-10 flex w-full justify-center rounded-b-2xl border-t border-gray-200 py-4 shadow-xl">
           <button className="flex items-center space-x-2 rounded bg-[#fa6932] px-4 py-2 text-sm text-white transition duration-150 ease-in-out hover:bg-[#db5c2a]">
             <HiOutlineUser />
             <span>Sign in</span>
