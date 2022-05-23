@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
 import Explore from '../components/Explore/Explore'
+import Host from '../components/Explore/Host'
 
 const Home: NextPage = () => {
   const IMG_URL =
@@ -168,6 +169,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <Explore />
+        <Host />
       </div>
     </main>
   )
