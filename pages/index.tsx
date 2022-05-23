@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
+import Destinations from '../components/Explore/Destinations'
 import Explore from '../components/Explore/Explore'
 import Host from '../components/Explore/Host'
 
@@ -170,6 +171,7 @@ const Home: NextPage = () => {
         </div>
         <Explore />
         <Host />
+        <Destinations />
       </div>
     </main>
   )
