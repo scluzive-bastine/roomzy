@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { FiSearch } from 'react-icons/fi'
+import Explore from '../components/Explore/Explore'
 
 const Home: NextPage = () => {
   const IMG_URL =
@@ -104,9 +105,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-screen-xl pb-10">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div className="group relative h-[500px] w-full rounded-2xl">
+      <div className="mx-auto max-w-screen-xl">
+        <div className="grid grid-cols-1 gap-5 pb-10 md:grid-cols-3">
+          <div className="group relative h-[240px] w-full rounded-2xl md:h-[500px]">
             <Image
               src={img1}
               layout="fill"
@@ -150,7 +151,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="group relative h-[500px] w-full rounded-2xl">
+          <div className="group relative h-[240px] w-full rounded-2xl md:h-[500px]">
             <Image
               src={img4}
               layout="fill"
@@ -165,6 +166,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+        <Explore />
       </div>
     </main>
   )
