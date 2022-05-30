@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { FiShare } from 'react-icons/fi'
 import { MdOutlineStar, MdLocationOn } from 'react-icons/md'
+import { RiArrowDropDownLine } from 'react-icons/ri'
 
 const Room = () => {
   const img1 =
@@ -66,7 +67,7 @@ const Room = () => {
             />
           </div>
         </div>
-        <div className="flex justify-between space-x-5">
+        <div className="flex shrink-0 flex-grow-0 justify-between space-x-5">
           <div className="md:w-2/3">
             <div className="border-b border-gray-200 pb-5">
               <h1 className="text-xl font-semibold capitalize">
@@ -76,8 +77,16 @@ const Room = () => {
                 2 guests . 1 bedroom . 1 bath . 1 bed
               </span>
             </div>
+            <div className="py-4 text-gray-500">
+              <p className="mb-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti praesentium velit laborum provident ullam iure modi!
+                Eaque maxime quidem mollitia, enim temporibus, distinctio, omnis
+                sit architecto labore animi delectus illum?
+              </p>
+            </div>
           </div>
-          <div className="flex-grow rounded-2xl border border-gray-100 p-4 shadow-lg">
+          <div className="flex-grow rounded-2xl border border-gray-100 p-5 shadow-lg">
             <div className="flex justify-between">
               <h1>
                 <span className="font-semibold">$98</span> / night
@@ -89,6 +98,26 @@ const Room = () => {
                   <span className="text-gray-500 underline">(178) reviews</span>
                 </span>
               </span>
+            </div>
+            <div className="mt-5">
+              <div className="mt-2 flex h-fit items-center justify-between space-x-2 rounded-t-xl border border-gray-200 px-4 py-2">
+                <div className="w-1/2 cursor-pointer border-r border-gray-200">
+                  <h1 className="font-semibold text-gray-800">Check-In</h1>
+                  <span className="text-sm text-gray-500">Add date</span>
+                </div>
+                <div className="w-1/2 cursor-pointer">
+                  <h1 className=" font-semibold  text-gray-800">Check-Out</h1>
+                  <span className="text-sm text-gray-500">Add date</span>
+                </div>
+              </div>
+              <div className="rounded-b-xl border-x border-b border-gray-200 px-4 py-2">
+                <h1>Guests</h1>
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-500">1 Guest</span>
+                  <RiArrowDropDownLine />
+                </div>
+              </div>
+              <button className="btn mt-4 w-full">Reserve</button>
             </div>
           </div>
         </div>
