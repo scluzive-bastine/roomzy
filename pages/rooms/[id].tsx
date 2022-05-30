@@ -2,6 +2,9 @@ import Image from 'next/image'
 import { FiShare } from 'react-icons/fi'
 import { MdOutlineStar, MdLocationOn } from 'react-icons/md'
 import { RiArrowDropDownLine } from 'react-icons/ri'
+import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
+import MobileReserveButton from '../../components/rooms/MobileReserveButton'
+import { useProviderContext } from '../../context/context'
 
 const Room = () => {
   const img1 =
@@ -12,6 +15,8 @@ const Room = () => {
     'https://images.unsplash.com/photo-1563720223420-70e9835a9cb3?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI1fHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
   const img4 =
     'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
+
+  const { isCheckoutOpen } = useProviderContext()
   return (
     <div className="mx-auto mt-5 max-w-screen-xl md:mt-10">
       <div className="px-4">
@@ -27,8 +32,8 @@ const Room = () => {
           <h1 className="mb-5 mt-5 text-lg font-semibold md:mt-0 md:text-3xl">
             Still Bend/Frank Lloyd Wright's Schwartz House
           </h1>
-          <div className="flex-col items-center justify-between space-y-2 md:flex md:space-y-0">
-            <div className="flex-col items-center space-y-2 md:flex md:space-x-4 md:space-y-0">
+          <div className="flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+            <div className="flex-col items-center space-y-2 md:flex-row md:space-x-4 md:space-y-0">
               <span className="flex items-center space-x-1">
                 <MdOutlineStar className="text-xl" />
                 <span>
@@ -130,17 +135,8 @@ const Room = () => {
           </div>
         </div>
       </div>
-      <div className="fixed bottom-0 z-10 w-full bg-gradient-to-r from-[#e0602e] to-[#91e9e2] pt-1 md:hidden ">
-        <div className="flex justify-between bg-white px-4 py-2">
-          <div>
-            <div>
-              $98 <span className="text-sm text-gray-500">night</span>
-            </div>
-            <div className="text-sm text-gray-500">2 guests . Jan 8 - 18</div>
-          </div>
-          <button className="btn">Reserve</button>
-        </div>
-      </div>
+      <MobileReserveButton />
+      {isCheckoutOpen && <MobileReserveContainer />}
     </div>
   )
 }
