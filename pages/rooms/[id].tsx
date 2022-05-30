@@ -13,14 +13,22 @@ const Room = () => {
   const img4 =
     'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
   return (
-    <div className="mx-auto mt-10 max-w-screen-xl">
+    <div className="mx-auto mt-5 max-w-screen-xl md:mt-10">
       <div className="px-4">
+        <div className="relative h-[200px] w-full md:hidden">
+          <Image
+            src={img1}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
+          />
+        </div>
         <div>
-          <h1 className="mb-5 text-3xl font-semibold">
+          <h1 className="mb-5 mt-5 text-lg font-semibold md:mt-0 md:text-3xl">
             Still Bend/Frank Lloyd Wright's Schwartz House
           </h1>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+          <div className="flex-col items-center justify-between space-y-2 md:flex md:space-y-0">
+            <div className="flex-col items-center space-y-2 md:flex md:space-x-4 md:space-y-0">
               <span className="flex items-center space-x-1">
                 <MdOutlineStar className="text-xl" />
                 <span>
@@ -41,7 +49,7 @@ const Room = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 py-10 md:grid-cols-3">
+        <div className="hidden grid-cols-1 gap-4 py-10 md:grid md:grid-cols-3">
           <div className="group relative h-[240px] w-full rounded-l-2xl md:h-[500px]">
             <Image
               src={img1}
@@ -67,7 +75,7 @@ const Room = () => {
             />
           </div>
         </div>
-        <div className="flex shrink-0 flex-grow-0 justify-between space-x-5">
+        <div className="mt-10 shrink-0 flex-grow-0 flex-col justify-between space-x-5 md:mt-0 md:flex md:flex-row">
           <div className="md:w-2/3">
             <div className="border-b border-gray-200 pb-5">
               <h1 className="text-xl font-semibold capitalize">
@@ -86,7 +94,7 @@ const Room = () => {
               </p>
             </div>
           </div>
-          <div className="flex-grow rounded-2xl border border-gray-100 p-5 shadow-lg">
+          <div className="hidden flex-grow rounded-2xl border border-gray-100 p-5 shadow-lg md:block">
             <div className="flex justify-between">
               <h1>
                 <span className="font-semibold">$98</span> / night
@@ -120,6 +128,17 @@ const Room = () => {
               <button className="btn mt-4 w-full">Reserve</button>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="fixed bottom-0 z-10 w-full bg-gradient-to-r from-[#e0602e] to-[#91e9e2] pt-1 md:hidden ">
+        <div className="flex justify-between bg-white px-4 py-2">
+          <div>
+            <div>
+              $98 <span className="text-sm text-gray-500">night</span>
+            </div>
+            <div className="text-sm text-gray-500">2 guests . Jan 8 - 18</div>
+          </div>
+          <button className="btn">Reserve</button>
         </div>
       </div>
     </div>
