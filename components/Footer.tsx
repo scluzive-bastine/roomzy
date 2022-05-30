@@ -3,7 +3,7 @@ import logo from '../images/logo.svg'
 
 const Footer = () => {
   return (
-    <div className="border-t border-gray-200 pt-5">
+    <div className="mt-10 border-t border-gray-200 pt-5">
       <div className="mx-auto max-w-screen-2xl px-4">
         <div className="flex items-center justify-between py-4">
           <div>

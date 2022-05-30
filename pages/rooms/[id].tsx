@@ -1,0 +1,100 @@
+import Image from 'next/image'
+import { FiShare } from 'react-icons/fi'
+import { MdOutlineStar, MdLocationOn } from 'react-icons/md'
+
+const Room = () => {
+  const img1 =
+    'https://images.unsplash.com/photo-1611602132416-da2045990f76?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
+  const img2 =
+    'https://images.unsplash.com/photo-1614846384571-1e31322ed3a9?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTIzfHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
+  const img3 =
+    'https://images.unsplash.com/photo-1563720223420-70e9835a9cb3?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI1fHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
+  const img4 =
+    'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
+  return (
+    <div className="mx-auto mt-10 max-w-screen-xl">
+      <div className="px-4">
+        <div>
+          <h1 className="mb-5 text-3xl font-semibold">
+            Still Bend/Frank Lloyd Wright's Schwartz House
+          </h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <span className="flex items-center space-x-1">
+                <MdOutlineStar className="text-xl" />
+                <span>
+                  5.0{' '}
+                  <span className="text-gray-500 underline">(178) reviews</span>
+                </span>
+              </span>
+              <span className="flex items-center space-x-1">
+                <MdLocationOn />
+                <span className="text-gray-500">
+                  Two Rivers, Wisconsin, United States
+                </span>
+              </span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <FiShare className="text-xl" />
+              <span className="underline">Share</span>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-4 py-10 md:grid-cols-3">
+          <div className="group relative h-[240px] w-full rounded-l-2xl md:h-[500px]">
+            <Image
+              src={img1}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-l-2xl"
+            />
+          </div>
+          <div className="flex flex-col space-y-5">
+            <div className="group relative h-[240px] w-full ">
+              <Image src={img2} layout="fill" objectFit="cover" className="" />
+            </div>
+            <div className="group relative h-[240px] w-full ">
+              <Image src={img3} layout="fill" objectFit="cover" className="" />
+            </div>
+          </div>
+          <div className="group relative h-[240px] w-full rounded-r-2xl md:h-[500px]">
+            <Image
+              src={img4}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-r-2xl"
+            />
+          </div>
+        </div>
+        <div className="flex justify-between space-x-5">
+          <div className="md:w-2/3">
+            <div className="border-b border-gray-200 pb-5">
+              <h1 className="text-xl font-semibold capitalize">
+                House Hosted by George
+              </h1>
+              <span className="text-sm text-gray-500">
+                2 guests . 1 bedroom . 1 bath . 1 bed
+              </span>
+            </div>
+          </div>
+          <div className="flex-grow rounded-2xl border border-gray-100 p-4 shadow-lg">
+            <div className="flex justify-between">
+              <h1>
+                <span className="font-semibold">$98</span> / night
+              </h1>
+              <span className="flex items-center space-x-1">
+                <MdOutlineStar className="text-xl" />
+                <span>
+                  5.0{' '}
+                  <span className="text-gray-500 underline">(178) reviews</span>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Room
