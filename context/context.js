@@ -10,9 +10,14 @@ const AppActions = () => {
     dispatch({ type: 'TOGGLE_CHECKOUT' })
   }
 
+  const toggleSearch = () => {
+    dispatch({ type: 'TOGGLE_SEARCH' })
+  }
+
   return {
     state,
     toggleCheckout,
+    toggleSearch,
   }
 }
 
@@ -21,6 +26,7 @@ const Provider = ({ children }) => {
 
   const value = {
     isCheckoutOpen: state.isCheckoutOpen,
+    isSearchOpen: state.isSearchOpen,
     ...restProps,
   }
 

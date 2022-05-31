@@ -5,11 +5,11 @@ import { Provider } from '../context/context'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout {...pageProps}>
-      <Provider>
+    <Provider>
+      <Layout {...pageProps}>
         <Component {...pageProps} />
-      </Provider>
-    </Layout>
+      </Layout>
+    </Provider>
   )
 }
 

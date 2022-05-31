@@ -4,6 +4,8 @@ import { FiSearch } from 'react-icons/fi'
 import Destinations from '../components/Explore/Destinations'
 import Explore from '../components/Explore/Explore'
 import Host from '../components/Explore/Host'
+import SearchForm from '../components/SearchForm'
+import { useProviderContext } from '../context/context'
 
 const Home: NextPage = () => {
   const IMG_URL =
@@ -18,6 +20,7 @@ const Home: NextPage = () => {
   const img4 =
     'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
 
+  const { isSearchOpen, toggleSearch } = useProviderContext()
   return (
     <main className="mx-auto max-w-screen-2xl px-4">
       <div className="relative pb-10">
@@ -42,63 +45,19 @@ const Home: NextPage = () => {
               Get inspired
             </button>
           </div>
-          <div className="mx-auto hidden w-full xl:mt-10 xl:block xl:w-2/3">
+          <div
+            className="mx-auto mt-3 block w-full max-w-xl cursor-pointer md:mt-10"
+            onClick={toggleSearch}
+          >
             <div className="flex items-center justify-between rounded-xl bg-white px-5 py-3">
-              <div className="flex items-center space-x-4">
-                <div className="flex flex-col xl:w-64">
-                  <label htmlFor="location" className="text-left font-semibold">
-                    Location
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Where are you going to?"
-                    className="mt-1 text-sm outline-none"
-                  />
-                </div>
-                <div className="flex flex-col border-l border-gray-200 pl-4">
-                  <label htmlFor="location" className="text-left font-semibold">
-                    Check in
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Check in date"
-                    className="mt-1 text-sm outline-none"
-                  />
-                </div>
-                <div className="flex flex-col border-l border-gray-200 pl-4">
-                  <label htmlFor="location" className="text-left font-semibold">
-                    Check out
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Check out date"
-                    className="mt-1 text-sm outline-none"
-                  />
-                </div>
-                <div className="flex flex-col border-l border-gray-200 pl-4">
-                  <label htmlFor="location" className="text-left font-semibold">
-                    Guests
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Number of Guests"
-                    className="mt-1 text-sm outline-none"
-                  />
-                </div>
-              </div>
-              <button className="rounded-lg bg-[#fa6932] p-3 text-lg text-white">
-                <FiSearch />
-              </button>
-            </div>
-          </div>
-          <div className="mx-auto mt-3 block w-full cursor-pointer md:mt-10 xl:hidden">
-            <div className="flex items-center justify-between rounded-lg bg-white px-5 py-3">
               <div className="flex flex-col">
                 <div className="text-left font-semibold text-black">
                   Where to?
                 </div>
-                <span className="mt-1 whitespace-nowrap text-sm text-gray-500">
-                  Anywhere . Anytime. Add Guests
+                <span className="mt-1 flex space-x-4 whitespace-nowrap text-sm text-gray-500">
+                  <span>Anywhere</span>
+                  <span>Anytime</span>
+                  <span>Add Guests</span>
                 </span>
               </div>
               <button className="rounded-lg bg-[#fa6932] p-3 text-lg text-white">

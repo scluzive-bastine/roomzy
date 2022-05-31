@@ -137,7 +137,7 @@ const search = () => {
           <div className="absolute h-full w-full bg-gradient-to-r from-black"></div>
           <div className="absolute flex h-full max-w-xl items-center">
             <div className="px-4 md:px-10">
-              <h1 className="mb-3 text-2xl text-white">
+              <h1 className="mb-3 text-lg text-white md:text-2xl">
                 Thoughtfully designed homes <br /> Exceptional locations.{' '}
                 <span className="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-orange">
                   <span className="relative text-sm uppercase italic">
