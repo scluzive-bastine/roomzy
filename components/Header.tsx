@@ -6,17 +6,20 @@ import logo from '../images/logo.svg'
 import Image from 'next/image'
 import { useState } from 'react'
 import NavDropdown from './mobile/NavDropdown'
+import { useRouter } from 'next/router'
 
 const Header = () => {
   // toogle dropdown
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow(!show)
 
+  const router = useRouter()
+
   return (
     <div className="mx-auto max-w-screen-2xl px-4">
       <div className="flex items-center justify-between py-4">
         <div className="flex items-center space-x-4">
-          <div>
+          <div className="cursor-pointer" onClick={() => router.push('/')}>
             <Image src={logo} width="100%" height="40px" />
           </div>
           <div className="border-l border-gray-300 pl-5">
