@@ -7,8 +7,10 @@ import { FiMinus, FiPlus, FiSearch } from 'react-icons/fi'
 
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
+import { useRouter } from 'next/router'
 
 const SearchForm = () => {
+  const router = useRouter()
   const { isSearchOpen, toggleSearch } = useProviderContext()
 
   const [location, setLocation] = useState('')
@@ -38,6 +40,19 @@ const SearchForm = () => {
     if (guests > 1) {
       setGuests(guests - 1)
     }
+  }
+
+  const search = () => {
+    toggleSearch()
+    router.push({
+      pathname: '/search',
+      query: {
+        location: location,
+        checkin: checkin.toISOString(),
+        checkout: checkout.toISOString(),
+        guests: guests,
+      },
+    })
   }
 
   return (
@@ -158,7 +173,10 @@ const SearchForm = () => {
                       </div>
                     </div>
                     <div className="flex w-full justify-start md:w-auto">
-                      <button className="btn flex items-center space-x-2">
+                      <button
+                        className="btn flex items-center space-x-2"
+                        onClick={search}
+                      >
                         <FiSearch />
                         <span>Search</span>
                       </button>
