@@ -11,7 +11,8 @@ import { BASE_URL, HEADERS } from '../utils/constants'
 
 const search = () => {
   const router = useRouter()
-  const { location, checkin, checkout, guests } = router.query
+  const { location, checkin, checkout, guests, dest_type, dest_id } =
+    router.query
   const [loading, setLoading] = useState(true)
   const [hotels, setHotels] = useState([])
 
@@ -30,41 +31,27 @@ const search = () => {
   }
 
   const fetchHotels = () => {
-    setLoading(true)
     axios
       .request({
         method: 'GET',
-        url: BASE_URL + 'locations',
-        params: options,
+        url: BASE_URL + 'search',
+        params: {
+          checkout_date: formattedCheckOutDate,
+          checkin_date: formattedCheckInDate,
+          adults_number: guests,
+          dest_id: dest_id,
+          dest_type: dest_type,
+          units: 'metric',
+          locale: 'en-gb',
+          order_by: 'popularity',
+          filter_by_currency: 'USD',
+          room_number: '1',
+        },
         headers: HEADERS,
       })
       .then((res) => {
-        axios
-          .request({
-            method: 'GET',
-            url: BASE_URL + 'search',
-            params: {
-              checkout_date: formattedCheckOutDate,
-              checkin_date: formattedCheckInDate,
-              adults_number: guests,
-              dest_id: res.data[0].dest_id,
-              dest_type: res.data[0].dest_type,
-              units: 'metric',
-              locale: 'en-gb',
-              order_by: 'popularity',
-              filter_by_currency: 'USD',
-              room_number: '1',
-            },
-            headers: HEADERS,
-          })
-          .then((r) => {
-            console.log(r.data)
-
-            setHotels(r.data.result)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        console.log(res.data)
+        setHotels(res.data.result)
       })
       .catch((err) => {
         console.log(err)
@@ -73,14 +60,10 @@ const search = () => {
   }
 
   useEffect(() => {
-    if (location) {
+    if (location && checkin && checkout && guests && dest_type && dest_id) {
       fetchHotels()
     }
   }, [location])
-
-  if (hotels.length > 0) {
-    console.log('hotels', hotels)
-  }
 
   return (
     <div>
@@ -89,9 +72,7 @@ const search = () => {
           <div className="flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0">
             <div className="w-full md:w-2/5 lg:w-3/5">
               <span className="text-sm text-gray-500">Location</span>
-              <h1 className="font-semibold">
-                Still Bend/Frank Lloyd Wright's Schwartz House
-              </h1>
+              <h1 className="font-semibold">{location}</h1>
             </div>
             <div className="flex w-full flex-grow items-center justify-end space-x-10 md:w-auto">
               <div className="w-1/2 border-gray-300 md:border-l md:pl-4">

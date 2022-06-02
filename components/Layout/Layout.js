@@ -12,7 +12,7 @@ export default function Layout({ children }) {
         <title>Traveling and Booking simplified </title>
       </Head>
       <Header />
-      <main>
+      <main className="overflow-hidden">
         {isSearchOpen ? <SearchForm /> : null}
         {children}
       </main>

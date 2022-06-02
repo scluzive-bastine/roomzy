@@ -1,44 +1,66 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Transition, Dialog, Popover } from '@headlessui/react'
 import { useProviderContext } from '../context/context'
 import { DateRangePicker } from 'react-date-range'
 import { format } from 'date-fns'
 import { FiMinus, FiPlus, FiSearch } from 'react-icons/fi'
+import { MdOutlineLocationOn } from 'react-icons/md'
 
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import { BASE_URL, HEADERS } from '../utils/constants'
+import { DebounceInput } from 'react-debounce-input'
+import Image from 'next/image'
 
 const SearchForm = () => {
   const router = useRouter()
   const { isSearchOpen, toggleSearch } = useProviderContext()
 
-  const [location, setLocation] = useState('')
-  const [checkin, setCheckin] = useState(new Date())
-  const [checkout, setCheckout] = useState(new Date())
-  const [guests, setGuests] = useState(1)
+  const [locations, setLocations] = useState([])
+  // const [where, setWhere] = useState('')
+  // const [checkin, setCheckin] = useState(new Date())
+  // const [checkout, setCheckout] = useState(new Date())
+  // const [guests, setGuests] = useState(1)
+  const [showLocations, setShowLocations] = useState(false)
+
+  const [searchQuery, setSearchQuery] = useState({
+    location: '',
+    checkin: new Date(),
+    checkout: new Date(),
+    guests: 1,
+    dest_id: '',
+    dest_type: '',
+  })
 
   const handleSelect = (ranges) => {
-    setCheckin(ranges.selection.startDate)
-    setCheckout(ranges.selection.endDate)
+    setSearchQuery({
+      ...searchQuery,
+      checkin: ranges.selection.startDate,
+      checkout: ranges.selection.endDate,
+    })
   }
 
   const selectionRange = {
-    startDate: checkin,
-    endDate: checkout,
+    startDate: searchQuery.checkin,
+    endDate: searchQuery.checkout,
     key: 'selection',
   }
 
-  const formattedCheckInDate = format(new Date(checkin), 'MMMM dd')
-  const formattedCheckOutDate = format(new Date(checkout), ' MMMM dd')
+  const formattedCheckInDate = format(new Date(searchQuery.checkin), 'MMMM dd')
+  const formattedCheckOutDate = format(
+    new Date(searchQuery.checkout),
+    ' MMMM dd'
+  )
 
   // add guest function
   const addGuest = () => {
-    setGuests(guests + 1)
+    setSearchQuery({ ...searchQuery, guests: searchQuery.guests + 1 })
   }
   const removeGuest = () => {
-    if (guests > 1) {
-      setGuests(guests - 1)
+    if (searchQuery.guests > 1) {
+      setSearchQuery({ ...searchQuery, guests: searchQuery.guests - 1 })
     }
   }
 
@@ -47,13 +69,57 @@ const SearchForm = () => {
     router.push({
       pathname: '/search',
       query: {
-        location: location,
-        checkin: checkin.toISOString(),
-        checkout: checkout.toISOString(),
-        guests: guests,
+        location: searchQuery.location,
+        checkin: searchQuery.checkin.toISOString(),
+        checkout: searchQuery.checkout.toISOString(),
+        guests: searchQuery.guests,
+        dest_id: searchQuery.dest_id,
+        dest_type: searchQuery.dest_type,
       },
     })
   }
+
+  const fetchLocations = () => {
+    axios
+      .request({
+        method: 'GET',
+        url: BASE_URL + 'locations',
+        params: {
+          locale: 'en-gb',
+          name: searchQuery.location,
+        },
+        headers: HEADERS,
+      })
+      .then((res) => {
+        console.log(res.data)
+        setLocations(res.data)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  const handleLocationChange = (e) => {
+    searchQuery.location = e.target.value
+    setShowLocations(true)
+    if (!searchQuery.location || searchQuery.location === '') {
+      setShowLocations(false)
+    }
+  }
+
+  const handleSetDestinationId = (id, type, location) => {
+    setSearchQuery({
+      ...searchQuery,
+      dest_id: id,
+      dest_type: type,
+      location: location,
+    })
+    setShowLocations(false)
+  }
+
+  useEffect(() => {
+    if (searchQuery.location) {
+      fetchLocations()
+    }
+  }, [searchQuery.location])
 
   return (
     <Transition appear show={isSearchOpen} as={Fragment}>
@@ -70,7 +136,7 @@ const SearchForm = () => {
           <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
 
-        <div className="fixed inset-0 top-1/3 overflow-y-auto">
+        <div className="fixed inset-0 top-20 overflow-y-auto md:top-1/3">
           <div className="flex justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -90,20 +156,57 @@ const SearchForm = () => {
                 </Dialog.Title>
                 <div className="mx-auto mt-5 max-w-screen-xl">
                   <div className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-                    <div className="flex w-full flex-col  md:w-3/5">
+                    <div className="relative flex w-full flex-col md:w-3/5">
                       <label
                         htmlFor="location"
                         className="text-left font-semibold"
                       >
                         Location
                       </label>
-                      <input
-                        type="text"
+                      <DebounceInput
                         placeholder="Where are you going to?"
                         className="mt-1 rounded-lg border border-gray-200 p-3 text-sm outline-none"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
+                        value={searchQuery.location}
+                        minLength={2}
+                        maxLength={50}
+                        debounceTimeout={500}
+                        onChange={(e) => handleLocationChange(e)}
                       />
+                      <Popover>
+                        {showLocations && (
+                          <Popover.Panel static>
+                            <div className="absolute top-20 w-full rounded-lg border border-gray-200 bg-white px-2 py-4 shadow-xl">
+                              {locations &&
+                                locations.map((location) => (
+                                  <Popover.Button
+                                    onClick={() =>
+                                      handleSetDestinationId(
+                                        location.dest_id,
+                                        location.dest_type,
+                                        location.name
+                                      )
+                                    }
+                                    key={location.dest_id}
+                                    className="mb-4 flex w-full cursor-pointer space-x-2 rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100"
+                                  >
+                                    <MdOutlineLocationOn className="text-2xl" />
+                                    <div>
+                                      <h1 className="text-left">
+                                        {location.name}
+                                      </h1>
+                                      <p className="text-left text-xs text-gray-500">
+                                        {location.label}
+                                      </p>
+                                      <p className="text-left text-xs text-gray-500">
+                                        {location.country}
+                                      </p>
+                                    </div>
+                                  </Popover.Button>
+                                ))}
+                            </div>
+                          </Popover.Panel>
+                        )}
+                      </Popover>
                     </div>
                     <div className="flex w-full flex-col border-gray-200 md:w-2/3 md:border-l md:pl-4">
                       <Popover>
@@ -117,7 +220,9 @@ const SearchForm = () => {
                                 Check in
                               </label>
                               <span className="mt-1 py-3 text-left text-sm text-gray-500 ">
-                                {checkin ? formattedCheckInDate : 'Check-In'}
+                                {searchQuery.checkin
+                                  ? formattedCheckInDate
+                                  : 'Check-In'}
                               </span>
                             </div>
                             <div className="flex w-1/2 flex-col border-gray-200 pl-4 md:border-l">
@@ -128,7 +233,9 @@ const SearchForm = () => {
                                 Check out
                               </label>
                               <span className="mt-1 py-3 text-left text-sm text-gray-500 ">
-                                {checkout ? formattedCheckOutDate : 'Check-Out'}
+                                {searchQuery.checkout
+                                  ? formattedCheckOutDate
+                                  : 'Check-Out'}
                               </span>
                             </div>
                           </div>
@@ -157,12 +264,12 @@ const SearchForm = () => {
                         <button
                           className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 px-2 py-1 text-black disabled:text-gray-300`}
                           onClick={removeGuest}
-                          disabled={guests === 1}
+                          disabled={searchQuery.guests === 1}
                         >
                           <FiMinus />
                         </button>
                         <span className="text-center text-sm text-gray-500">
-                          {guests}
+                          {searchQuery.guests}
                         </span>
                         <button
                           className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 px-2 py-1 text-black`}
@@ -174,8 +281,13 @@ const SearchForm = () => {
                     </div>
                     <div className="flex w-full justify-start md:w-auto">
                       <button
-                        className="btn flex items-center space-x-2"
+                        className="btn flex items-center space-x-2 disabled:cursor-not-allowed disabled:bg-gray-200"
                         onClick={search}
+                        disabled={
+                          !searchQuery.location ||
+                          !searchQuery.checkin ||
+                          !searchQuery.checkout
+                        }
                       >
                         <FiSearch />
                         <span>Search</span>
