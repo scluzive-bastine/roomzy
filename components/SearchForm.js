@@ -14,6 +14,7 @@ import { BASE_URL, HEADERS } from '../utils/constants'
 import { DebounceInput } from 'react-debounce-input'
 import { LocationsLoader } from '../utils/loaders/Loader'
 import LocationsList from './Search/LocationsList'
+import { addDays } from 'date-fns'
 
 const SearchForm = () => {
   const router = useRouter()
@@ -26,7 +27,7 @@ const SearchForm = () => {
   const [searchQuery, setSearchQuery] = useState({
     location: '',
     checkin: new Date(),
-    checkout: new Date(),
+    checkout: addDays(new Date(), 1),
     guests: 1,
     dest_id: '',
     dest_type: '',
