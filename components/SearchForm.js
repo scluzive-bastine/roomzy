@@ -12,18 +12,16 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { BASE_URL, HEADERS } from '../utils/constants'
 import { DebounceInput } from 'react-debounce-input'
-import Image from 'next/image'
+import { LocationsLoader } from '../utils/loaders/Loader'
+import LocationsList from './Search/LocationsList'
 
 const SearchForm = () => {
   const router = useRouter()
   const { isSearchOpen, toggleSearch } = useProviderContext()
 
   const [locations, setLocations] = useState([])
-  // const [where, setWhere] = useState('')
-  // const [checkin, setCheckin] = useState(new Date())
-  // const [checkout, setCheckout] = useState(new Date())
-  // const [guests, setGuests] = useState(1)
   const [showLocations, setShowLocations] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [searchQuery, setSearchQuery] = useState({
     location: '',
@@ -80,6 +78,7 @@ const SearchForm = () => {
   }
 
   const fetchLocations = () => {
+    setLoading(true)
     axios
       .request({
         method: 'GET',
@@ -95,6 +94,7 @@ const SearchForm = () => {
         setLocations(res.data)
       })
       .catch((err) => console.log(err))
+      .finally(() => setLoading(false))
   }
 
   const handleLocationChange = (e) => {
@@ -176,33 +176,19 @@ const SearchForm = () => {
                         {showLocations && (
                           <Popover.Panel static>
                             <div className="absolute top-20 w-full rounded-lg border border-gray-200 bg-white px-2 py-4 shadow-xl">
-                              {locations &&
+                              {loading ? (
+                                <LocationsLoader />
+                              ) : (
                                 locations.map((location) => (
-                                  <Popover.Button
-                                    onClick={() =>
-                                      handleSetDestinationId(
-                                        location.dest_id,
-                                        location.dest_type,
-                                        location.name
-                                      )
-                                    }
+                                  <LocationsList
                                     key={location.dest_id}
-                                    className="mb-4 flex w-full cursor-pointer space-x-2 rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100"
-                                  >
-                                    <MdOutlineLocationOn className="text-2xl" />
-                                    <div>
-                                      <h1 className="text-left">
-                                        {location.name}
-                                      </h1>
-                                      <p className="text-left text-xs text-gray-500">
-                                        {location.label}
-                                      </p>
-                                      <p className="text-left text-xs text-gray-500">
-                                        {location.country}
-                                      </p>
-                                    </div>
-                                  </Popover.Button>
-                                ))}
+                                    location={location}
+                                    handleSetDestinationId={
+                                      handleSetDestinationId
+                                    }
+                                  />
+                                ))
+                              )}
                             </div>
                           </Popover.Panel>
                         )}

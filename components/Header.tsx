@@ -19,8 +19,6 @@ const Header = () => {
 
   const { toggleSearch, isSearchOpen } = useProviderContext()
 
-  console.log(isSearchOpen)
-
   return (
     <>
       <div className="sticky top-0 z-10 mx-auto max-w-screen-2xl bg-white px-4">

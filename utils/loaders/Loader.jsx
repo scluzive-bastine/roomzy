@@ -92,3 +92,31 @@ export const Loader = (props) => (
     </ContentLoader>
   </div>
 )
+
+export const LocationsLoader = (props) => (
+  <ContentLoader
+    speed={2}
+    width={'100%'}
+    height={'100%'}
+    viewBox="0 0 294 159"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#dfdfdf"
+    {...props}
+  >
+    <rect x="0" y="0" rx="2" ry="2" width="14" height="15" />
+    <rect x="26" y="0" rx="5" ry="5" width="268" height="10" />
+    <rect x="26" y="12" rx="4" ry="4" width="119" height="7" />
+    <rect x="0" y="35" rx="2" ry="2" width="14" height="15" />
+    <rect x="26" y="35" rx="5" ry="5" width="268" height="10" />
+    <rect x="26" y="47" rx="4" ry="4" width="119" height="7" />
+    <rect x="0" y="70" rx="2" ry="2" width="14" height="15" />
+    <rect x="26" y="70" rx="5" ry="5" width="268" height="10" />
+    <rect x="26" y="82" rx="4" ry="4" width="119" height="7" />
+    <rect x="0" y="105" rx="2" ry="2" width="14" height="15" />
+    <rect x="26" y="105" rx="5" ry="5" width="268" height="10" />
+    <rect x="26" y="117" rx="4" ry="4" width="119" height="7" />
+    <rect x="0" y="140" rx="2" ry="2" width="14" height="15" />
+    <rect x="26" y="140" rx="5" ry="5" width="268" height="10" />
+    <rect x="26" y="152" rx="4" ry="4" width="119" height="7" />
+  </ContentLoader>
+)
