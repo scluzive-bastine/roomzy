@@ -28,6 +28,13 @@ export interface HotelsInterface {
   latitude?: number
   district_id?: number | null
   city?: string
+  distances: [
+    {
+      icon_set: string | null
+      icon_name: string
+      text: string
+    }
+  ]
   hotel_id?: number
   accommodation_type_name?: string | null
   city_name_en?: string | null
@@ -37,15 +44,15 @@ export interface HotelsInterface {
   children_not_allowed?: number | null
   main_photo_url?: string | null
   review_nr?: number | null
-  currency_code?: string
+  currency_code: string
   hotel_name?: string
   address_trans?: string | null
-  min_total_price?: number | null
+  min_total_price: number | null
   unit_configuration_label?: string | null
   price_breakdown?: {} | null
   main_photo_id?: number | null
   url?: string | null
-  countrycode?: string | null
+  countrycode: string | null
   accommodation_type?: string | null
   max_photo_url: string
   max_1440_photo_url: string | null

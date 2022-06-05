@@ -13,24 +13,19 @@ const search = () => {
   const router = useRouter()
   const { location, checkin, checkout, guests, dest_type, dest_id } =
     router.query
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [hotels, setHotels] = useState([])
 
   let formattedCheckInDate: string
   let formattedCheckOutDate: string
-  let searchOptions: {}
 
   if (checkin && checkout) {
     formattedCheckInDate = format(parseISO(checkin?.toString()), 'yyyy-MM-dd')
     formattedCheckOutDate = format(parseISO(checkout?.toString()), 'yyyy-MM-dd')
   }
 
-  const options = {
-    locale: 'en-gb',
-    name: location,
-  }
-
   const fetchHotels = () => {
+    setLoading(true)
     axios
       .request({
         method: 'GET',
@@ -56,7 +51,9 @@ const search = () => {
       .catch((err) => {
         console.log(err)
       })
-    setLoading(false)
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   useEffect(() => {

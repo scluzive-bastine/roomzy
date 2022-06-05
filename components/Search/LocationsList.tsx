@@ -27,7 +27,7 @@ const LocationsList = ({ location, handleSetDestinationId }: Props) => {
         )
       }
       key={location.dest_id}
-      className="mb-4 flex w-full cursor-pointer space-x-2 rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100"
+      className="mb-2 flex w-full cursor-pointer space-x-2 rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100"
     >
       <MdOutlineLocationOn className="text-2xl" />
       <div>

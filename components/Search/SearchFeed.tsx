@@ -16,6 +16,9 @@ const SearchFeed = ({ feeds }: Props) => {
               key={hotel.hotel_id}
               image={hotel.max_photo_url}
               name={hotel.hotel_name}
+              currency={hotel.currency_code}
+              price={hotel.min_total_price}
+              distance={hotel.distances}
             />
           ))}
           <Banner />
@@ -24,6 +27,9 @@ const SearchFeed = ({ feeds }: Props) => {
               key={hotel.hotel_id}
               image={hotel.max_photo_url}
               name={hotel.hotel_name}
+              currency={hotel.currency_code}
+              distance={hotel.distances}
+              price={hotel.min_total_price}
             />
           ))}
         </div>
@@ -36,6 +42,9 @@ const SearchFeed = ({ feeds }: Props) => {
               key={hotel.hotel_id}
               image={hotel.max_photo_url}
               name={hotel.hotel_name}
+              currency={hotel.currency_code}
+              distance={hotel.distances}
+              price={hotel.min_total_price}
             />
           ))}
           <Banner />
