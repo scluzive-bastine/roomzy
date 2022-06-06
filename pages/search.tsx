@@ -8,12 +8,16 @@ import { FiSearch } from 'react-icons/fi'
 import SearchFeed from '../components/Search/SearchFeed'
 import { Loader } from '../utils/loaders/Loader'
 import { BASE_URL, HEADERS } from '../utils/constants'
+import { MdErrorOutline } from 'react-icons/md'
+import Link from 'next/link'
+import Error from '../utils/Error'
 
 const search = () => {
   const router = useRouter()
   const { location, checkin, checkout, guests, dest_type, dest_id } =
     router.query
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [hotels, setHotels] = useState([])
 
   let formattedCheckInDate: string
@@ -50,10 +54,21 @@ const search = () => {
       })
       .catch((err) => {
         console.log(err)
+        setError(true)
       })
       .finally(() => {
         setLoading(false)
       })
+  }
+
+  const renderConent = () => {
+    if (loading) {
+      return <Loader />
+    }
+    if (error) {
+      return <Error />
+    }
+    return <SearchFeed feeds={hotels} />
   }
 
   useEffect(() => {
@@ -96,9 +111,7 @@ const search = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-screen-xl px-4">
-        {loading ? <Loader /> : <SearchFeed feeds={hotels} />}
-      </div>
+      <div className="mx-auto max-w-screen-xl px-4">{renderConent()}</div>
     </div>
   )
 }
