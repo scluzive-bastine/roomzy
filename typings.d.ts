@@ -35,7 +35,7 @@ export interface HotelsInterface {
       text: string
     }
   ]
-  hotel_id?: number
+  hotel_id: number
   accommodation_type_name?: string | null
   city_name_en?: string | null
   composite_price_breakdown?: {} | null
@@ -45,7 +45,7 @@ export interface HotelsInterface {
   main_photo_url?: string | null
   review_nr?: number | null
   currency_code: string
-  hotel_name?: string
+  hotel_name: string
   address_trans?: string | null
   min_total_price: number | null
   unit_configuration_label?: string | null
@@ -56,4 +56,12 @@ export interface HotelsInterface {
   accommodation_type?: string | null
   max_photo_url: string
   max_1440_photo_url: string | null
+}
+
+export interface Hotels {
+  feeds: HotelsInterface[]
+}
+
+export interface Hotel {
+  hotel: HotelsInterface
 }

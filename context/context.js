@@ -14,10 +14,15 @@ const AppActions = () => {
     dispatch({ type: 'TOGGLE_SEARCH' })
   }
 
+  const setHotel = (hotel) => {
+    dispatch({ type: 'SET_HOTEL', payload: hotel })
+  }
+
   return {
     state,
     toggleCheckout,
     toggleSearch,
+    setHotel,
   }
 }
 
@@ -27,6 +32,7 @@ const Provider = ({ children }) => {
   const value = {
     isCheckoutOpen: state.isCheckoutOpen,
     isSearchOpen: state.isSearchOpen,
+    hotel: state.hotel,
     ...restProps,
   }
 

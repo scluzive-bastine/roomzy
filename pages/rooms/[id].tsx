@@ -5,6 +5,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri'
 import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
 import MobileReserveButton from '../../components/rooms/MobileReserveButton'
 import { useProviderContext } from '../../context/context'
+import { useRouter } from 'next/router'
 
 const Room = () => {
   const img1 =
@@ -15,6 +16,12 @@ const Room = () => {
     'https://images.unsplash.com/photo-1563720223420-70e9835a9cb3?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI1fHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
   const img4 =
     'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
+
+  const router = useRouter()
+
+  const { id, name } = router.query
+
+  console.log(id)
 
   const { isCheckoutOpen } = useProviderContext()
   return (
@@ -28,25 +35,25 @@ const Room = () => {
             className="rounded-lg"
           />
         </div>
-        <div>
+        <div className="w-full">
           <h1 className="mb-5 mt-5 text-lg font-semibold md:mt-0 md:text-3xl">
             Still Bend/Frank Lloyd Wright's Schwartz House
           </h1>
-          <div className="flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
-            <div className="flex-col items-center space-y-2 md:flex-row md:space-x-4 md:space-y-0">
-              <span className="flex items-center space-x-1">
+          <div className="flex flex-col justify-between space-y-3 md:flex-row md:space-y-0">
+            <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-4 md:space-y-0">
+              <div className="flex w-full items-center space-x-1 md:w-auto">
                 <MdOutlineStar className="text-xl" />
                 <span>
                   5.0{' '}
                   <span className="text-gray-500 underline">(178) reviews</span>
                 </span>
-              </span>
-              <span className="flex items-center space-x-1">
+              </div>
+              <div className="flex w-full items-center space-x-1 md:w-auto">
                 <MdLocationOn />
                 <span className="text-gray-500">
                   Two Rivers, Wisconsin, United States
                 </span>
-              </span>
+              </div>
             </div>
             <div className="flex items-center space-x-2">
               <FiShare className="text-xl" />
@@ -54,7 +61,7 @@ const Room = () => {
             </div>
           </div>
         </div>
-        <div className="hidden grid-cols-1 gap-4 py-10 md:grid md:grid-cols-3">
+        <div className="hidden grid-cols-1 gap-3 py-10 md:grid md:grid-cols-2">
           <div className="group relative h-[240px] w-full rounded-l-2xl md:h-[500px]">
             <Image
               src={img1}
@@ -63,21 +70,33 @@ const Room = () => {
               className="rounded-l-2xl"
             />
           </div>
-          <div className="flex flex-col space-y-5">
-            <div className="group relative h-[240px] w-full ">
-              <Image src={img2} layout="fill" objectFit="cover" className="" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div className="flex flex-col space-y-3">
+              <div className="group relative h-[244px] w-full rounded-r-2xl">
+                <Image src={img4} layout="fill" objectFit="cover" />
+              </div>
+              <div className="group relative h-[244px] w-full rounded-r-2xl">
+                <Image src={img4} layout="fill" objectFit="cover" />
+              </div>
             </div>
-            <div className="group relative h-[240px] w-full ">
-              <Image src={img3} layout="fill" objectFit="cover" className="" />
+            <div className="flex flex-col space-y-3">
+              <div className="group relative h-[244px] w-full rounded-tr-2xl">
+                <Image
+                  src={img4}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-tr-2xl"
+                />
+              </div>
+              <div className="group relative h-[244px] w-full rounded-br-2xl">
+                <Image
+                  src={img4}
+                  layout="fill"
+                  objectFit="cover"
+                  className=" rounded-br-2xl"
+                />
+              </div>
             </div>
-          </div>
-          <div className="group relative h-[240px] w-full rounded-r-2xl md:h-[500px]">
-            <Image
-              src={img4}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-r-2xl"
-            />
           </div>
         </div>
         <div className="mt-10 shrink-0 flex-grow-0 flex-col justify-between space-x-5 md:mt-0 md:flex md:flex-row">
