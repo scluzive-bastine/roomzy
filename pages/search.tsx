@@ -74,15 +74,23 @@ const search = () => {
             <div className="flex w-full flex-grow items-center justify-end space-x-10 md:w-auto">
               <div className="w-1/2 border-gray-300 md:border-l md:pl-4">
                 <span className="text-sm text-gray-500">Check-In</span>
-                <h1 className="font-semibold">Jun 5</h1>
+                <h1 className="font-semibold">
+                  {checkin
+                    ? format(parseISO(checkin?.toString()), 'MMM dd')
+                    : '-'}
+                </h1>
               </div>
               <div className="w-1/2 border-gray-300 md:border-l md:pl-4">
                 <span className="text-sm text-gray-500">Check-Out</span>
-                <h1 className="font-semibold">Jun 10</h1>
+                <h1 className="font-semibold">
+                  {checkout
+                    ? format(parseISO(checkout?.toString()), 'MMM dd')
+                    : '-'}
+                </h1>
               </div>
               <div className="w-1/2 border-gray-300 md:border-l md:pl-4">
                 <span className="text-sm text-gray-500">Guests</span>
-                <h1 className="font-semibold">2</h1>
+                <h1 className="font-semibold">{guests ? guests : '-'}</h1>
               </div>
             </div>
           </div>
