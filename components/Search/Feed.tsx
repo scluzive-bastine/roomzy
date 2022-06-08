@@ -3,8 +3,10 @@ import { HotelsInterface, Hotel } from '../../typings'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import { priceFormatter } from '../../utils/functions'
 import { useRouter } from 'next/router'
+import { useProviderContext } from '../../context/context'
 
 const Feed = ({ hotel }: Hotel) => {
+  const { setHotel } = useProviderContext()
   const {
     max_photo_url,
     distances,
@@ -14,10 +16,16 @@ const Feed = ({ hotel }: Hotel) => {
     hotel_id,
   } = hotel
   const router = useRouter()
+
   let distanceFromCityCenter
   distances.map((item) => {
     distanceFromCityCenter = item.text
   })
+
+  // function to save hotel on local storage
+  const saveHotelOnLocalStorage = () => {
+    localStorage.setItem('hotel', JSON.stringify(hotel))
+  }
 
   const showHotel = () => {
     router.push({
@@ -25,8 +33,11 @@ const Feed = ({ hotel }: Hotel) => {
       query: {
         name: hotel_name,
         id: hotel_id,
+        price: min_total_price,
       },
     })
+    setHotel(hotel)
+    saveHotelOnLocalStorage()
   }
 
   return (
