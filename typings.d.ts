@@ -49,7 +49,7 @@ export interface HotelsInterface {
   address_trans?: string | null
   address: string
   min_total_price: number | null
-  unit_configuration_label?: string | null
+  unit_configuration_label: string | null
   price_breakdown?: {} | null
   main_photo_id?: number | null
   url?: string | null

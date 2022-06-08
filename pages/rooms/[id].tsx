@@ -5,7 +5,7 @@ import {
   MdLocationOn,
   MdOutlineNearbyError,
 } from 'react-icons/md'
-import { RiArrowDropDownLine, RiGridFill } from 'react-icons/ri'
+import { RiArrowDropDownLine, RiCommunityLine } from 'react-icons/ri'
 import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
 import MobileReserveButton from '../../components/rooms/MobileReserveButton'
 import { useProviderContext } from '../../context/context'
@@ -28,6 +28,9 @@ import axios from 'axios'
 import { BASE_URL, HEADERS } from '../../utils/constants'
 import { HotelsInterface } from '../../typings'
 import ShowImages from '../../components/rooms/ShowImages'
+import { HiOutlinePhotograph } from 'react-icons/hi'
+import { BsDot } from 'react-icons/bs'
+import parse from 'html-react-parser'
 
 interface Images {
   url_max: string
@@ -45,8 +48,16 @@ const Room = () => {
 
   const { id } = router.query
 
-  const { hotel_name, address, currency_code, min_total_price, hotel_id } =
-    hotel
+  const {
+    hotel_name,
+    address,
+    currency_code,
+    min_total_price,
+    hotel_id,
+    unit_configuration_label,
+    review_nr,
+    review_score,
+  } = hotel
 
   const fetchHotelImages = () => {
     axios
@@ -103,6 +114,8 @@ const Room = () => {
     setShowImages(!showImages)
   }
 
+  console.log(hotel)
+
   useEffect(() => {
     if (id) {
       fetchHotelImages()
@@ -132,16 +145,12 @@ const Room = () => {
                 <div className="flex flex-col items-center space-y-3 md:flex-row md:space-x-4 md:space-y-0">
                   <div className="flex w-full items-center space-x-1 md:w-auto">
                     <MdOutlineStar className="text-xl" />
-                    <span>
-                      5.0{' '}
-                      <span className="text-gray-500 underline">
-                        (178) reviews
+                    <span className="flex items-center">
+                      Review score: {review_score} <BsDot />
+                      <span className="text-sm text-gray-500">
+                        ({review_nr}) reviews
                       </span>
                     </span>
-                  </div>
-                  <div className="flex w-full items-center space-x-1 md:w-auto">
-                    <MdLocationOn />
-                    <span className="text-gray-500">{address}</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -198,9 +207,13 @@ const Room = () => {
               </div>
               <button
                 onClick={handleShowImages}
-                className="absolute bottom-5 right-5 flex items-center space-x-2 rounded-lg border border-black bg-white px-4 py-2 text-sm text-black"
+                className="absolute bottom-5 right-5 flex items-center space-x-2 rounded-lg bg-white px-4 py-2 text-sm text-black transition duration-150 ease-in-out hover:shadow-lg"
               >
-                <RiGridFill /> <span>Show all photos</span>
+                <HiOutlinePhotograph className="text-lg" />{' '}
+                <span>
+                  Show all photos{' '}
+                  <span className="text-xs">+{images.length}</span>{' '}
+                </span>
               </button>
               <ShowImages
                 isOpen={showImages}
@@ -211,12 +224,20 @@ const Room = () => {
             <div className="relative mt-10 shrink-0 flex-grow-0 flex-col justify-between space-x-5 md:flex md:flex-row">
               <div className="md:w-2/3">
                 <div className="border-b border-gray-200 pb-5">
-                  <h1 className="text-xl font-semibold capitalize">
-                    House Hosted by George
-                  </h1>
-                  <span className="text-sm text-gray-500">
-                    2 guests . 1 bedroom . 1 bath . 1 bed
-                  </span>
+                  <div className="flex w-full space-x-1 text-lg md:w-auto md:items-center md:text-xl">
+                    <MdLocationOn className="" />
+                    <span className="w-4/5 flex-grow-0 md:w-auto">
+                      {address}
+                    </span>
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="flex items-center space-x-2 text-lg font-semibold">
+                      <RiCommunityLine /> <span>Unit Configuration</span>
+                    </h4>
+                    <span className="text-sm text-gray-600">
+                      {parse(unit_configuration_label || '')}
+                    </span>
+                  </div>
                 </div>
                 <div className="border-b border-gray-200 py-10 pb-5 text-gray-500">
                   {breakLines(description)}
