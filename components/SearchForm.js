@@ -76,6 +76,7 @@ const SearchForm = () => {
         dest_type: searchQuery.dest_type,
       },
     })
+    localStorage.setItem('checkinData', JSON.stringify(searchQuery))
   }
 
   const fetchLocations = () => {

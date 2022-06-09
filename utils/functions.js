@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 export const priceFormatter = (price) => {
   return price.toFixed().toLocaleString('en-US')
 }
@@ -16,4 +18,9 @@ export const breakLines = (text) => {
 // convert meters to kilometers
 export const metersToKilometers = (meters) => {
   return (meters / 1000).toFixed(1) + ' km'
+}
+
+//format date
+export const formatDate = (date) => {
+  return format(new Date(date), 'MMMM dd')
 }

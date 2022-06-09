@@ -34,6 +34,9 @@ const Feed = ({ hotel }: Hotel) => {
         name: hotel_name,
         id: hotel_id,
         price: min_total_price,
+        checkin: router.query.checkin,
+        checkout: router.query.checkout,
+        guests: router.query.guests,
       },
     })
     setHotel(hotel)

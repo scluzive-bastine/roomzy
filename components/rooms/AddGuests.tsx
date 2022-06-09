@@ -1,22 +1,32 @@
+import { useRouter } from 'next/router'
 import { useEffect, useState, useRef } from 'react'
 import { FiMinus, FiPlus } from 'react-icons/fi'
 
 interface Props {
   handleShowGuests: () => void
+  guests: number
+  handleAddGuests: () => void
+  handleRemoveGuests: () => void
 }
 
-const AddGuests = ({ handleShowGuests }: Props) => {
-  const [guests, setGuests] = useState(1)
+interface Guests {
+  checkin: string
+  checkout: string
+  location: string
+  guests: number
+  dest_id: number
+  dest_type: string
+}
+
+const AddGuests = ({
+  handleShowGuests,
+  guests,
+  handleAddGuests,
+  handleRemoveGuests,
+}: Props) => {
+  const router = useRouter()
+  const [data, setData] = useState<Partial<Guests>>({})
   const ref = useRef<HTMLDivElement>(null)
-  // add guest function
-  const addGuest = () => {
-    setGuests(guests + 1)
-  }
-  const removeGuest = () => {
-    if (guests > 1) {
-      setGuests(guests - 1)
-    }
-  }
 
   useEffect(() => {
     const handleClickOuteSide = (e: { target: any }) => {
@@ -29,6 +39,7 @@ const AddGuests = ({ handleShowGuests }: Props) => {
       document.removeEventListener('click', handleClickOuteSide, true)
     }
   }, [handleShowGuests])
+
   return (
     <div
       className="absolute w-full rounded-2xl bg-white p-4 shadow-lg"
@@ -39,7 +50,7 @@ const AddGuests = ({ handleShowGuests }: Props) => {
         <div className="mt-1 flex items-center space-x-4 py-1">
           <button
             className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 px-2 py-1 text-black disabled:text-gray-300`}
-            onClick={removeGuest}
+            onClick={handleRemoveGuests}
             disabled={guests === 1}
           >
             <FiMinus />
@@ -47,7 +58,7 @@ const AddGuests = ({ handleShowGuests }: Props) => {
           <span className="text-center text-sm text-gray-500">{guests}</span>
           <button
             className={`flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 px-2 py-1 text-black`}
-            onClick={addGuest}
+            onClick={handleAddGuests}
           >
             <FiPlus />
           </button>

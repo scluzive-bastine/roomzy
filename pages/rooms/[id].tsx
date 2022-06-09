@@ -34,6 +34,7 @@ import { HiOutlinePhotograph } from 'react-icons/hi'
 import { BsDot } from 'react-icons/bs'
 import parse from 'html-react-parser'
 import AddGuests from '../../components/rooms/AddGuests'
+import { formatDate } from '../../utils/functions'
 
 interface Images {
   url_max: string
@@ -51,7 +52,13 @@ const Room = () => {
   const [showCheckInOutDate, setShowCheckInOutDate] = useState(false)
   const [showAddGuests, setShowAddGuests] = useState(false)
 
-  const { id } = router.query
+  const { id, checkin, checkout, guests } = router.query
+
+  const [reservation, setReservation] = useState({
+    visitors: Number(guests),
+    checkin: new Date(),
+    checkout: new Date(),
+  })
 
   const {
     hotel_name,
@@ -127,14 +134,44 @@ const Room = () => {
     setShowAddGuests(!showAddGuests)
   }
 
+  const addGuest = () => {
+    setReservation({ ...reservation, visitors: reservation.visitors + 1 })
+  }
+
+  const removeGuest = () => {
+    if (reservation.visitors > 1) {
+      setReservation({ ...reservation, visitors: reservation.visitors - 1 })
+    }
+  }
+
+  const handleSelect = (ranges: any) => {
+    setReservation({
+      ...reservation,
+      checkin: ranges.selection.startDate,
+      checkout: ranges.selection.endDate,
+    })
+  }
+
+  console.log(reservation)
+
   useEffect(() => {
     if (id) {
-      // fetchHotelImages()
-      // fetchHotelDescription()
-      // fetchNearbyPlaces()
+      fetchHotelImages()
+      fetchHotelDescription()
+      fetchNearbyPlaces()
     }
 
     const hotel = JSON.parse(localStorage.getItem('hotel') || '{}')
+    const guests = JSON.parse(localStorage.getItem('checkinData') || '{}')
+    if (guests) {
+      setReservation({
+        ...reservation,
+        checkin: guests.checkin,
+        checkout: guests.checkout,
+        visitors: guests.guests,
+      })
+    }
+
     if (hotel) {
       setHotelData(hotel)
       setLoading(false)
@@ -306,19 +343,26 @@ const Room = () => {
                         <h1 className="font-semibold text-gray-800">
                           Check-In
                         </h1>
-                        <span className="text-sm text-gray-500">Add date</span>
+                        <span className="text-sm text-gray-500">
+                          {formatDate(reservation.checkin)}
+                        </span>
                       </div>
                       <div className="w-1/2">
                         <h1 className=" font-semibold  text-gray-800">
                           Check-Out
                         </h1>
-                        <span className="text-sm text-gray-500">Add date</span>
+                        <span className="text-sm text-gray-500">
+                          {formatDate(reservation.checkout)}
+                        </span>
                       </div>
                     </div>
                     {showCheckInOutDate && (
                       <CheckInOutDate
                         isOpen={showCheckInOutDate}
                         handleShowDate={handleShowCheckInOutDate}
+                        checkin={reservation.checkin}
+                        checkout={reservation.checkout}
+                        selectDate={handleSelect}
                       />
                     )}
                   </div>
@@ -329,12 +373,19 @@ const Room = () => {
                     >
                       <h1>Guests</h1>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">1 Guest</span>
+                        <span className="text-sm text-gray-500">
+                          {reservation.visitors} Guest
+                        </span>
                         <RiArrowDropDownLine />
                       </div>
                     </div>
                     {showAddGuests && (
-                      <AddGuests handleShowGuests={handleShowAddGuests} />
+                      <AddGuests
+                        handleShowGuests={handleShowAddGuests}
+                        guests={Number(reservation.visitors)}
+                        handleAddGuests={addGuest}
+                        handleRemoveGuests={removeGuest}
+                      />
                     )}
                   </div>
 

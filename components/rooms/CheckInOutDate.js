@@ -1,12 +1,18 @@
 import { DateRangePicker } from 'react-date-range'
 import { useEffect, useRef } from 'react'
 
-const CheckInOutDate = ({ handleShowDate, isOpen }) => {
+const CheckInOutDate = ({
+  handleShowDate,
+  isOpen,
+  checkin,
+  checkout,
+  selectDate,
+}) => {
   const ref = useRef(null)
 
   const selectionRange = {
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date(checkin),
+    endDate: new Date(checkout),
     key: 'selection',
   }
 
@@ -34,6 +40,7 @@ const CheckInOutDate = ({ handleShowDate, isOpen }) => {
         months={2}
         direction="horizontal"
         rangeColors={['#FD5B61']}
+        onChange={selectDate}
       />
       <div className="flex justify-end">
         <button
