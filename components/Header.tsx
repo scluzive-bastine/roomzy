@@ -21,8 +21,8 @@ const Header = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-10 mx-auto max-w-screen-2xl bg-white px-4">
-        <div className="flex items-center justify-between py-4">
+      <div className="sticky top-0 z-50 w-full bg-white px-4">
+        <div className="mx-auto flex max-w-screen-2xl items-center justify-between py-4">
           <div className="flex items-center space-x-4">
             <div className="cursor-pointer" onClick={() => router.push('/')}>
               <Image src={logo} width="100%" height="40px" />

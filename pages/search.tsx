@@ -8,9 +8,11 @@ import { FiSearch } from 'react-icons/fi'
 import SearchFeed from '../components/Search/SearchFeed'
 import { Loader } from '../utils/loaders/Loader'
 import { BASE_URL, HEADERS } from '../utils/constants'
-import { MdErrorOutline } from 'react-icons/md'
+import { MdChevronLeft, MdErrorOutline } from 'react-icons/md'
 import Link from 'next/link'
 import Error from '../utils/Error'
+import MapContainer from '../components/MapContainer'
+import { HotelsInterface } from '../typings'
 
 const search = () => {
   const router = useRouter()
@@ -18,7 +20,7 @@ const search = () => {
     router.query
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const [hotels, setHotels] = useState([])
+  const [hotels, setHotels] = useState<HotelsInterface[]>([])
 
   let formattedCheckInDate: string
   let formattedCheckOutDate: string
@@ -78,7 +80,7 @@ const search = () => {
   }, [location])
 
   return (
-    <div>
+    <div className="relative">
       <div className="sticky border-y border-gray-200 bg-gray-100 py-4">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0">
@@ -111,7 +113,10 @@ const search = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-screen-xl px-4">{renderConent()}</div>
+      <div className="mx-auto max-w-screen-xl px-4">
+        {renderConent()}
+        <div>{loading ? 'Loading...' : <MapContainer feeds={hotels} />}</div>
+      </div>
     </div>
   )
 }

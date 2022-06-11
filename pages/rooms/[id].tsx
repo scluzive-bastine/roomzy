@@ -152,8 +152,6 @@ const Room = () => {
     })
   }
 
-  console.log(reservation)
-
   useEffect(() => {
     if (id) {
       fetchHotelImages()

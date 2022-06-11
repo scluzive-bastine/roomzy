@@ -13,7 +13,8 @@ export interface SearchParams {
 }
 
 export interface HotelsInterface {
-  currencycode?: string
+  map: any
+  currencycode: string
   preferred_plus?: number
   id?: number
   block_ids?: []
@@ -24,8 +25,8 @@ export interface HotelsInterface {
   checkout?: {}
   badges?: [] | null
   type?: string
-  longitude?: number
-  latitude?: number
+  longitude: number
+  latitude: number
   district_id?: number | null
   city?: string
   distances: [
