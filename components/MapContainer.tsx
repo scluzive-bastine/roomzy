@@ -40,7 +40,7 @@ const MapContainer = ({ feeds }: Hotels) => {
     <div
       className={`absolute ${
         show ? 'right-0' : '-right-[35%]'
-      } top-28 h-[700px] w-[800px] rounded-2xl transition duration-150`}
+      } top-28 hidden h-[700px] w-[800px] rounded-2xl transition duration-150 xl:flex`}
     >
       <button
         className="absolute top-1/2 left-0 z-10 -ml-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-2xl text-black shadow-lg"
