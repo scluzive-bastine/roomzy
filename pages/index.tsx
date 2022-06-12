@@ -22,7 +22,7 @@ const Home: NextPage = () => {
 
   const { isSearchOpen, toggleSearch } = useProviderContext()
   return (
-    <main className="mx-auto max-w-screen-2xl px-4">
+    <main className="mx-auto max-w-screen-2xl px-4 pt-5">
       <div className="relative pb-10">
         <div className="relative h-[400px] w-full rounded-3xl md:h-[400px] md:w-full xl:h-[600px]">
           <Image
