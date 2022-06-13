@@ -8,6 +8,7 @@ import { Popover } from '@headlessui/react'
 import Image from 'next/image'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import { priceFormatter } from '../utils/functions'
+import MapPopUp from './MapPopUp'
 
 interface MapCenter {
   latitude: number
@@ -56,47 +57,22 @@ const MapContainer = ({ feeds }: Hotels) => {
         style={{ borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}
         onMove={(e) => setViewport({ ...viewport, ...e })}
       >
-        {feeds?.map((d: HotelsInterface) => (
-          <div key={d.hotel_id}>
-            <Marker longitude={d.longitude} latitude={d.latitude}>
+        {feeds?.map((hotel: HotelsInterface) => (
+          <div key={hotel.hotel_id}>
+            <Marker longitude={hotel.longitude} latitude={hotel.latitude}>
               <button
                 className="w-auto rounded-2xl bg-white px-3 py-1 text-sm font-semibold transition duration-150 ease-in-out hover:scale-110"
-                onClick={() => setSelectedLocation(d)}
+                onClick={() => setSelectedLocation(hotel)}
               >
-                {getSymbolFromCurrency(d.currencycode)}
-                {priceFormatter(d.min_total_price)}
+                {getSymbolFromCurrency(hotel.currencycode)}
+                {priceFormatter(hotel.min_total_price)}
               </button>
             </Marker>
-            {selectedLocation.longitude === d.longitude ? (
-              <Popup
-                onClose={() => setSelectedLocation({ longitude: 0 })}
-                closeOnClick={true}
-                closeButton={false}
-                latitude={d.latitude}
-                longitude={d.longitude}
-                className="relative z-10 w-[300px] bg-transparent"
-              >
-                <div className="">
-                  <div className="relative h-[150px] w-full overflow-hidden">
-                    <Image
-                      src={d.max_photo_url}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-sm"
-                    />
-                  </div>
-                  <div className="mt-2">
-                    <h1 className="text-sm font-semibold">{d.hotel_name}</h1>
-                    <p className="mt-1 text-sm font-semibold">
-                      {getSymbolFromCurrency(d.currencycode)}
-                      {priceFormatter(d.min_total_price)} {''}
-                      <span className="font-normal text-gray-500">
-                        night
-                      </span>{' '}
-                    </p>
-                  </div>
-                </div>
-              </Popup>
+            {selectedLocation.longitude === hotel.longitude ? (
+              <MapPopUp
+                hotel={hotel}
+                setSelectedLocation={setSelectedLocation}
+              />
             ) : (
               false
             )}

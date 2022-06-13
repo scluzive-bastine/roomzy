@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 export const priceFormatter = (price) => {
   return price.toFixed().toLocaleString('en-US')
@@ -23,4 +24,9 @@ export const metersToKilometers = (meters) => {
 //format date
 export const formatDate = (date) => {
   return format(new Date(date), 'MMMM dd')
+}
+
+//save hotel data to localStorage
+export const saveHotelOnLocalStorage = (data) => {
+  localStorage.setItem('hotel', JSON.stringify(data))
 }
