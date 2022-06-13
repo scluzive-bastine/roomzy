@@ -13,6 +13,7 @@ import Link from 'next/link'
 import Error from '../utils/Error'
 import MapContainer from '../components/MapContainer'
 import { HotelsInterface } from '../typings'
+import { RiMap2Fill } from 'react-icons/ri'
 
 const search = () => {
   const router = useRouter()
@@ -20,6 +21,7 @@ const search = () => {
     router.query
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [showMap, setShowMap] = useState(false)
   const [hotels, setHotels] = useState<HotelsInterface[]>([])
 
   let formattedCheckInDate: string
@@ -63,6 +65,10 @@ const search = () => {
       })
   }
 
+  const handleShowMap = () => {
+    setShowMap(!showMap)
+  }
+
   const renderConent = () => {
     if (loading) {
       return <Loader />
@@ -80,7 +86,7 @@ const search = () => {
   }, [location])
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <div className="sticky border-y border-gray-200 bg-gray-100 py-4">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0">
@@ -115,7 +121,22 @@ const search = () => {
       </div>
       <div className="mx-auto max-w-screen-xl px-4">
         {renderConent()}
-        <div>{loading ? 'Loading...' : <MapContainer feeds={hotels} />}</div>
+        <div>
+          {loading ? (
+            'Loading...'
+          ) : (
+            <MapContainer feeds={hotels} showMap={showMap} />
+          )}
+        </div>
+        <div className="flex justify-center 2xl:hidden">
+          <button
+            className="fixed bottom-20 z-30 flex items-center space-x-1 rounded bg-black px-4 py-2 text-white"
+            onClick={handleShowMap}
+          >
+            <RiMap2Fill />
+            <span>{showMap ? 'Hide map' : 'Show map'}</span>
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -4,8 +4,6 @@ import { Map, Marker, Popup } from 'react-map-gl'
 import getCenter from 'geolib/es/getCenter'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Hotels, HotelsInterface } from '../typings'
-import { Popover } from '@headlessui/react'
-import Image from 'next/image'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import { priceFormatter } from '../utils/functions'
 import MapPopUp from './MapPopUp'
@@ -15,7 +13,12 @@ interface MapCenter {
   longitude: number
 }
 
-const MapContainer = ({ feeds }: Hotels) => {
+interface Props {
+  feeds: HotelsInterface[]
+  showMap: boolean
+}
+
+const MapContainer = ({ feeds, showMap }: Props) => {
   const [show, setShow] = useState(false)
   const [selectedLocation, setSelectedLocation] = useState({
     longitude: 0,
@@ -23,7 +26,7 @@ const MapContainer = ({ feeds }: Hotels) => {
 
   const handleClick = () => setShow(!show)
 
-  const cordinates = feeds.map((data) => ({
+  const cordinates = feeds.map((data: { longitude: any; latitude: any }) => ({
     longitude: data.longitude,
     latitude: data.latitude,
   }))
@@ -37,14 +40,21 @@ const MapContainer = ({ feeds }: Hotels) => {
     zoom: 11,
   })
 
+  console.log(showMap)
+
+  const mapClasses = () => {
+    if (showMap) {
+      return 'w-full h-[700px] z-20 top-0 md:top-24 left-0 right-0 2xl:hidden'
+    }
+    return `${
+      show ? 'right-0' : '-right-[700px]'
+    } top-28 hidden h-[700px] w-[800px] rounded-2xl transition duration-150 2xl:block`
+  }
+
   return (
-    <div
-      className={`absolute ${
-        show ? 'right-0' : '-right-[35%]'
-      } top-28 hidden h-[700px] w-[800px] rounded-2xl transition duration-150 xl:flex`}
-    >
+    <div className={`absolute ${mapClasses()}`}>
       <button
-        className="absolute top-1/2 left-0 z-10 -ml-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-2xl text-black shadow-lg"
+        className="absolute top-1/2 left-0 z-10 -ml-5 hidden h-11 w-11 items-center justify-center rounded-full bg-white text-2xl text-black shadow-lg 2xl:flex"
         onClick={handleClick}
       >
         {show ? <MdChevronRight /> : <MdChevronLeft />}

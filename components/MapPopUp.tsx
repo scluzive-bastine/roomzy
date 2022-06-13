@@ -4,7 +4,7 @@ import { Popup } from 'react-map-gl'
 import { priceFormatter, saveHotelOnLocalStorage } from '../utils/functions'
 import { useRouter } from 'next/router'
 import { useProviderContext } from '../context/context'
-import { Hotel, HotelsInterface } from '../typings'
+import { HotelsInterface } from '../typings'
 
 interface Props {
   hotel: HotelsInterface

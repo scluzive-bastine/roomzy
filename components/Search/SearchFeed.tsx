@@ -7,7 +7,7 @@ const SearchFeed = ({ feeds }: Hotels) => {
   const feedList = () => {
     if (feeds.length > 10) {
       return (
-        <div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-4 ">
+        <div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {feeds.slice(0, 4).map((hotel) => (
             <Feed key={hotel.hotel_id} hotel={hotel} />
           ))}
@@ -19,7 +19,7 @@ const SearchFeed = ({ feeds }: Hotels) => {
       )
     } else {
       return (
-        <div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-4 ">
+        <div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 ">
           {feeds.map((hotel) => (
             <Feed key={hotel.hotel_id} hotel={hotel} />
           ))}
