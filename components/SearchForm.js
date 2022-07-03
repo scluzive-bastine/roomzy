@@ -125,7 +125,7 @@ const SearchForm = () => {
 
   return (
     <Transition appear show={isSearchOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={toggleSearch}>
+      <Dialog as="div" className="relative z-50" onClose={toggleSearch}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -138,8 +138,8 @@ const SearchForm = () => {
           <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
 
-        <div className="fixed inset-0 top-20 overflow-y-auto md:top-1/3">
-          <div className="flex justify-center p-4 text-center">
+        <div className="fixed inset-0 flex h-screen w-full items-center overflow-y-scroll pb-10">
+          <div className="flex w-full justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
