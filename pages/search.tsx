@@ -3,7 +3,7 @@ import { format, parseISO } from 'date-fns'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import SearchFeed from '../components/Search/SearchFeed'
 import { Loader } from '../utils/loaders/Loader'
@@ -23,6 +23,11 @@ const search = () => {
   const [error, setError] = useState(false)
   const [showMap, setShowMap] = useState(false)
   const [hotels, setHotels] = useState<HotelsInterface[]>([])
+
+  const mapRef = useRef<HTMLDivElement>(null)
+
+  const scrollToElement = () =>
+    mapRef.current?.scrollIntoView({ behavior: 'smooth' })
 
   let formattedCheckInDate: string
   let formattedCheckOutDate: string
@@ -66,6 +71,7 @@ const search = () => {
   }
 
   const handleShowMap = () => {
+    scrollToElement()
     setShowMap(!showMap)
   }
 
@@ -86,7 +92,7 @@ const search = () => {
   }, [location])
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden" ref={mapRef}>
       <div className="sticky border-y border-gray-200 bg-gray-100 py-4">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0">
