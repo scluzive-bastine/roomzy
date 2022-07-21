@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import bg from '../../images/bh.png'
 
 const Host = () => {
@@ -33,7 +34,9 @@ const Host = () => {
           <p className="font-light text-gray-500">
             Earn extra income and unlock new opportunities by sharing your space
           </p>
-          <button className="btn mt-2">Learn more</button>
+          <Link href="/host">
+            <button className="btn mt-2">Learn more</button>
+          </Link>
         </div>
       </div>
       <div className="relative flex touch-pan-x snap-x snap-mandatory snap-center place-items-center gap-5 overflow-x-scroll scroll-smooth scrollbar-hide md:flex-col xl:grid xl:grid-cols-3 xl:space-x-5">
@@ -96,9 +99,11 @@ const Host = () => {
           <p className="font-light text-gray-500">
             Earn extra income and unlock new opportunities by sharing your space
           </p>
-          <button className="mt-2 rounded bg-[#fa6932] px-4 py-2 text-white">
-            Learn more
-          </button>
+          <Link href="/host">
+            <button className="mt-2 rounded bg-[#fa6932] px-4 py-2 text-white">
+              Learn more
+            </button>
+          </Link>
         </div>
         <div className="relative flex space-x-4 xl:flex-col xl:space-y-20">
           <div className="relative flex justify-between xl:space-x-4">
