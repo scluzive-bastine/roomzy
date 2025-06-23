@@ -1,40 +1,33 @@
 import Image from 'next/image'
 import { FiShare } from 'react-icons/fi'
 import {
-  MdOutlineStar,
   MdLocationOn,
   MdOutlineNearbyError,
+  MdOutlineStar,
 } from 'react-icons/md'
 import { RiArrowDropDownLine, RiCommunityLine } from 'react-icons/ri'
-import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
-import MobileReserveButton from '../../components/rooms/MobileReserveButton'
 import CheckInOutDate from '../../components/rooms/CheckInOutDate'
+import MobileReserveButton from '../../components/rooms/MobileReserveButton'
+import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
 
-import { useProviderContext } from '../../context/context'
-import { useRouter } from 'next/router'
+import axios from 'axios'
 import getSymbolFromCurrency from 'currency-symbol-map'
+import parse from 'html-react-parser'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { BsDot } from 'react-icons/bs'
+import { HiOutlinePhotograph } from 'react-icons/hi'
+import AddGuests from '../../components/rooms/AddGuests'
+import ShowImages from '../../components/rooms/ShowImages'
+import { useProviderContext } from '../../context/context'
+import { HotelsInterface } from '../../typings'
+import { BASE_URL, HEADERS } from '../../utils/constants'
 import {
   breakLines,
+  formatDate,
   metersToKilometers,
   priceFormatter,
 } from '../../utils/functions'
-import {
-  Key,
-  ReactChild,
-  ReactFragment,
-  ReactPortal,
-  useEffect,
-  useState,
-} from 'react'
-import axios from 'axios'
-import { BASE_URL, HEADERS } from '../../utils/constants'
-import { HotelsInterface } from '../../typings'
-import ShowImages from '../../components/rooms/ShowImages'
-import { HiOutlinePhotograph } from 'react-icons/hi'
-import { BsDot } from 'react-icons/bs'
-import parse from 'html-react-parser'
-import AddGuests from '../../components/rooms/AddGuests'
-import { formatDate } from '../../utils/functions'
 
 interface Images {
   url_max: string
@@ -80,7 +73,6 @@ const Room = () => {
         headers: HEADERS,
       })
       .then((res) => {
-        console.log(res.data)
         setImages(res.data)
       })
       .catch((err) => {
@@ -97,7 +89,6 @@ const Room = () => {
         headers: HEADERS,
       })
       .then((res) => {
-        console.log(res.data.description)
         setDescription(res.data.description)
       })
       .catch((err) => {
@@ -114,6 +105,7 @@ const Room = () => {
         headers: HEADERS,
       })
       .then((res) => {
+        console.log('data: ', res.data)
         console.log(res.data.surroundings)
         setPlaces(res.data.surroundings)
       })
@@ -294,7 +286,7 @@ const Room = () => {
                     <span>Nearby Places</span>
                   </h1>
                   <ul className="mt-4">
-                    {places.map((place: { items: [] }) =>
+                    {places?.map((place: { items: [] }) =>
                       place.items.map(
                         (item: { landmark_name: string; distance: number }) => (
                           <li
