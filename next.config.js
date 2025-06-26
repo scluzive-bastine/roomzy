@@ -2,7 +2,11 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com', 'cf.bstatic.com'],
+    domains: [
+      'images.unsplash.com',
+      'cf.bstatic.com',
+      'lh3.googleusercontent.com',
+    ],
   },
   env: {
     mapbox_key:

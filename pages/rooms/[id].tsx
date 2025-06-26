@@ -7,10 +7,10 @@ import {
 } from 'react-icons/md'
 import { RiArrowDropDownLine, RiCommunityLine } from 'react-icons/ri'
 import CheckInOutDate from '../../components/rooms/CheckInOutDate'
+import HotelSkeleton from '../../components/rooms/HotelSkeleton'
 import MobileReserveButton from '../../components/rooms/MobileReserveButton'
 import MobileReserveContainer from '../../components/rooms/MobileReserveContainer'
 
-import axios from 'axios'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import parse from 'html-react-parser'
 import { useRouter } from 'next/router'
@@ -18,16 +18,17 @@ import { useEffect, useState } from 'react'
 import { BsDot } from 'react-icons/bs'
 import { HiOutlinePhotograph } from 'react-icons/hi'
 import AddGuests from '../../components/rooms/AddGuests'
+import Reviews from '../../components/rooms/Reviews'
 import ShowImages from '../../components/rooms/ShowImages'
 import { useProviderContext } from '../../context/context'
-import { HotelsInterface } from '../../typings'
-import { BASE_URL, HEADERS } from '../../utils/constants'
+import { HotelsInterface, ReviewsInterface } from '../../typings'
 import {
   breakLines,
   formatDate,
   metersToKilometers,
   priceFormatter,
 } from '../../utils/functions'
+import { fetchHotelData } from '../../utils/hotelApi'
 
 interface Images {
   url_max: string
@@ -37,10 +38,15 @@ const Room = () => {
   const { isCheckoutOpen, setHotel } = useProviderContext()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [retrying, setRetrying] = useState(false)
   const [images, setImages] = useState<Images[]>([])
   const [hotel, setHotelData] = useState<Partial<HotelsInterface>>({})
   const [description, setDescription] = useState('')
-  const [places, setPlaces] = useState([])
+  const [places, setPlaces] = useState<any[]>([])
+  const [tips, setTips] = useState<any[]>([])
+  const [reviews, setReviews] = useState<ReviewsInterface[]>([])
   const [showImages, setShowImages] = useState(false)
   const [showCheckInOutDate, setShowCheckInOutDate] = useState(false)
   const [showAddGuests, setShowAddGuests] = useState(false)
@@ -64,54 +70,32 @@ const Room = () => {
     review_score,
   } = hotel
 
-  const fetchHotelImages = () => {
-    axios
-      .request({
-        method: 'GET',
-        url: BASE_URL + 'photos',
-        params: { locale: 'en-gb', hotel_id: id },
-        headers: HEADERS,
-      })
-      .then((res) => {
-        setImages(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  // Combined fetch function
+  const fetchAllHotelData = async () => {
+    if (!id) return
 
-  const fetchHotelDescription = () => {
-    axios
-      .request({
-        method: 'GET',
-        url: BASE_URL + 'description',
-        params: { locale: 'en-gb', hotel_id: id },
-        headers: HEADERS,
-      })
-      .then((res) => {
-        setDescription(res.data.description)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+    setLoading(true)
+    setError(false)
+    setErrorMessage('')
+    setRetrying(false)
 
-  const fetchNearbyPlaces = () => {
-    axios
-      .request({
-        method: 'GET',
-        url: BASE_URL + 'nearby-places',
-        params: { locale: 'en-gb', hotel_id: id },
-        headers: HEADERS,
-      })
-      .then((res) => {
-        console.log('data: ', res.data)
-        console.log(res.data.surroundings)
-        setPlaces(res.data.surroundings)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    try {
+      const hotelData = await fetchHotelData(id)
+
+      setImages(hotelData.images)
+      setDescription(hotelData.description)
+      setPlaces(hotelData.nearbyPlaces)
+      setReviews(hotelData.reviews || [])
+    } catch (err: any) {
+      console.error('Error fetching hotel data:', err)
+      setError(true)
+      setErrorMessage(
+        err.message || 'Failed to load hotel data. Please try again later.'
+      )
+    } finally {
+      setLoading(false)
+      setRetrying(false)
+    }
   }
 
   const handleShowImages = () => {
@@ -146,9 +130,7 @@ const Room = () => {
 
   useEffect(() => {
     if (id) {
-      fetchHotelImages()
-      fetchHotelDescription()
-      fetchNearbyPlaces()
+      fetchAllHotelData()
     }
 
     const hotel = JSON.parse(localStorage.getItem('hotel') || '{}')
@@ -168,10 +150,32 @@ const Room = () => {
     }
   }, [id])
 
+  console.log('reviews: ', reviews)
+
   return (
     <div className="mx-auto mt-5 max-w-screen-xl md:mt-10">
       {loading ? (
-        'Loading...'
+        <HotelSkeleton />
+      ) : error ? (
+        <div className="px-4 text-center">
+          <div className="mb-4 text-lg text-red-500">{errorMessage}</div>
+          <button
+            onClick={() => {
+              setRetrying(true)
+              fetchAllHotelData()
+            }}
+            disabled={retrying}
+            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {retrying ? 'Retrying...' : 'Try Again'}
+          </button>
+          {errorMessage.includes('Rate limit') && (
+            <p className="mt-2 text-sm text-gray-500">
+              This usually happens when too many requests are made quickly.
+              Please wait a moment and try again.
+            </p>
+          )}
+        </div>
       ) : (
         <>
           <div className="px-4">
@@ -303,6 +307,37 @@ const Room = () => {
                     )}
                   </ul>
                 </div>
+                <Reviews reviews={reviews} />
+
+                {/* Hotel Tips Section */}
+                {tips && tips.length > 0 && (
+                  <div className="w-100 py-10 md:w-1/2">
+                    <h1 className="flex items-center space-x-2 text-xl font-semibold text-black">
+                      <MdOutlineStar />
+                      <span>Guest Tips</span>
+                    </h1>
+                    <ul className="mt-4">
+                      {tips.slice(0, 5).map((tip: any, index: number) => (
+                        <li
+                          className="border-b border-gray-100 py-4 text-gray-500"
+                          key={index}
+                        >
+                          <div className="flex items-start space-x-2">
+                            <MdOutlineStar className="mt-1 flex-shrink-0 text-yellow-400" />
+                            <div>
+                              <p className="text-sm">{tip.text}</p>
+                              {tip.reviewer_name && (
+                                <p className="mt-1 text-xs text-gray-400">
+                                  - {tip.reviewer_name}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               <div className="hidden h-[300px] flex-grow rounded-2xl border border-gray-100 p-5 shadow-md md:block">
                 <div className="flex justify-between">

@@ -67,3 +67,59 @@ export interface Hotels {
 export interface Hotel {
   hotel: HotelsInterface
 }
+
+export interface ReviewsInterface {
+  user_new_badges: string[]
+  countrycode: string
+  average_score: number
+  travel_purpose: string
+  pros_translated: string
+  review_hash: string
+  tags: string[]
+  review_id: number
+  reviewng: number
+  stayed_room_info: {
+    room_name: string
+    room_id: number
+    num_nights: number
+    checkin: string
+    checkout: string
+    photo: {
+      photo_id: number
+      ratio: number
+      url_original: string
+      url_640x200: string
+      url_max300: string
+      url_square60: string
+    }
+  }
+  cons: string
+  reviewer_photos: string[]
+  title: string
+  hotelier_response: string
+  helpful_vote_count: number
+  languagecode: string
+  date: string
+  is_incentivised: number
+  pros: string
+  is_moderated: number
+  hotelier_response_date: number
+  is_trivial: number
+  title_translated: string
+  hotelier_name: string
+  author: {
+    type_string: string
+    name: string
+    helpful_vote_count: number
+    avatar: string
+    city: string
+    nr_reviews: number
+    type: string
+    age_group: string
+    countrycode: string
+    user_id: number
+  }
+  hotel_id: number
+  anonymous: string
+  cons_translated: string
+}
