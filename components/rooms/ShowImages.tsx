@@ -69,7 +69,8 @@ const ShowImages = ({ isOpen, closeModal, data }: ShowImagesProps) => {
                   {data.map(
                     (img: { url_max: string | undefined }, index: Key) => (
                       <img
-                        src={img.url_max}
+                        alt="Image"
+                        src={img.url_max || ''}
                         loading="lazy"
                         key={index}
                         className="mb-4 w-full rounded-lg"

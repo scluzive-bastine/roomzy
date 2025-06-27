@@ -1,10 +1,10 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
 import Image from 'next/image'
-import { Popup } from 'react-map-gl'
-import { priceFormatter, saveHotelOnLocalStorage } from '../utils/functions'
 import { useRouter } from 'next/router'
+import { Popup } from 'react-map-gl'
 import { useProviderContext } from '../context/context'
 import { HotelsInterface } from '../typings'
+import { priceFormatter, saveHotelOnLocalStorage } from '../utils/functions'
 
 interface Props {
   hotel: HotelsInterface
@@ -55,6 +55,7 @@ const MapPopUp = ({ hotel, setSelectedLocation }: Props) => {
           onClick={showHotel}
         >
           <Image
+            alt={hotel_name}
             src={max_photo_url}
             layout="fill"
             objectFit="cover"

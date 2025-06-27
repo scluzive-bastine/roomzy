@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import logo from '../../images/logo.svg'
-import { IoMdClose } from 'react-icons/io'
 import Link from 'next/link'
 import { HiOutlineUser } from 'react-icons/hi'
+import { IoMdClose } from 'react-icons/io'
+import logo from '../../images/logo.svg'
 
 interface ToggleMenuProps {
   toggleShow: () => void
@@ -13,7 +13,13 @@ const NavDropdown = ({ toggleShow }: ToggleMenuProps) => {
     <div className="absolute top-0 left-0 z-50 block h-auto  w-full bg-white py-4 md:hidden">
       <div className="relative">
         <div className="flex justify-between px-4">
-          <Image src={logo} width="100%" height="40px" />
+          <Image
+            alt="Logo"
+            src={logo}
+            width="100%"
+            height="40px"
+            className="h-full w-full object-cover"
+          />
           <button
             className="flex items-center justify-center rounded bg-gray-200 px-4 py-2 text-lg outline-none transition duration-150 ease-in-out hover:bg-gray-300 md:hidden"
             onClick={toggleShow}

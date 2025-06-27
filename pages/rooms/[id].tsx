@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { FiShare } from 'react-icons/fi'
 import {
   MdLocationOn,
@@ -13,6 +12,7 @@ import MobileReserveContainer from '../../components/rooms/MobileReserveContaine
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 import parse from 'html-react-parser'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { BsDot } from 'react-icons/bs'
@@ -30,7 +30,7 @@ import {
 } from '../../utils/functions'
 import { fetchHotelData } from '../../utils/hotelApi'
 
-interface Images {
+interface ImageInterface {
   url_max: string
 }
 
@@ -41,7 +41,7 @@ const Room = () => {
   const [error, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [retrying, setRetrying] = useState(false)
-  const [images, setImages] = useState<Images[]>([])
+  const [images, setImages] = useState<ImageInterface[]>([])
   const [hotel, setHotelData] = useState<Partial<HotelsInterface>>({})
   const [description, setDescription] = useState('')
   const [places, setPlaces] = useState<any[]>([])
@@ -208,6 +208,7 @@ const Room = () => {
                   key={index}
                 >
                   <Image
+                    alt="Image"
                     src={image.url_max}
                     layout="fill"
                     objectFit="cover"
@@ -223,6 +224,7 @@ const Room = () => {
                       key={index}
                     >
                       <Image
+                        alt="Image"
                         src={image.url_max}
                         layout="fill"
                         objectFit="cover"
@@ -238,6 +240,7 @@ const Room = () => {
                       key={index}
                     >
                       <Image
+                        alt="Image"
                         src={image.url_max}
                         layout="fill"
                         objectFit="cover"

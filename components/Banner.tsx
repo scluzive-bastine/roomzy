@@ -10,6 +10,7 @@ const Banner = () => {
         layout="fill"
         objectFit="cover"
         className="rounded-2xl"
+        alt="Banner"
       />
       <div className="absolute h-full w-full bg-gradient-to-r from-black"></div>
       <div className="absolute flex h-full max-w-xl items-center">

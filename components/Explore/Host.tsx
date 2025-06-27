@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import bg from '../../images/bh.png'
 
 const Host = () => {
   const user1 =
@@ -23,7 +22,8 @@ const Host = () => {
   return (
     <div className="relative my-20 w-full rounded-xl bg-[#FBE3D9] p-4 transition duration-150 ease-in-out md:p-10 xl:bg-transparent">
       <Image
-        src={bg}
+        alt="Host"
+        src={'/images/bh.png'}
         layout="fill"
         objectFit="contain"
         className="hidden xl:block"
@@ -44,6 +44,7 @@ const Host = () => {
           <div className="relative flex space-x-4">
             <div className="relative h-[300px] w-[250px] rounded-xl">
               <Image
+                alt="User 1"
                 src={user1}
                 layout="fill"
                 objectFit="cover"
@@ -59,6 +60,7 @@ const Host = () => {
             <div className="absolute -bottom-14 right-0 hidden xl:block">
               <div className="relative h-[100px] w-[80px] rounded-md">
                 <Image
+                  alt="User 2"
                   src={user2}
                   layout="fill"
                   objectFit="cover"
@@ -70,6 +72,7 @@ const Host = () => {
           <div className="relative flex space-x-4">
             <div className="relative -mt-5 hidden h-[100px] w-[80px] rounded-md xl:block">
               <Image
+                alt="User 3"
                 src={user3}
                 layout="fill"
                 objectFit="cover"
@@ -79,6 +82,7 @@ const Host = () => {
             <div className="relative">
               <div className="relative h-[300px] w-[250px] rounded-xl">
                 <Image
+                  alt="User 4"
                   src={user4}
                   layout="fill"
                   objectFit="cover"
@@ -111,6 +115,7 @@ const Host = () => {
               <div className="absolute -bottom-14">
                 <div className="relative hidden h-[100px] w-[80px] rounded-md xl:block">
                   <Image
+                    alt="User 5"
                     src={user5}
                     layout="fill"
                     objectFit="cover"
@@ -121,6 +126,7 @@ const Host = () => {
             </div>
             <div className="relative h-[300px] w-[250px] rounded-xl">
               <Image
+                alt="User 6"
                 src={user6}
                 layout="fill"
                 objectFit="cover"
@@ -138,6 +144,7 @@ const Host = () => {
             <div className="relative">
               <div className="relative h-[300px] w-[250px] rounded-xl">
                 <Image
+                  alt="User 8"
                   src={user8}
                   layout="fill"
                   objectFit="cover"
@@ -153,6 +160,7 @@ const Host = () => {
             </div>
             <div className="relative -mt-5 hidden h-[100px] w-[80px] rounded-md xl:block">
               <Image
+                alt="User 7"
                 src={user7}
                 layout="fill"
                 objectFit="cover"

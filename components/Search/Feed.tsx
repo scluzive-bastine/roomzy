@@ -1,9 +1,9 @@
-import Image from 'next/image'
-import { Hotel } from '../../typings'
 import getSymbolFromCurrency from 'currency-symbol-map'
-import { priceFormatter, saveHotelOnLocalStorage } from '../../utils/functions'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useProviderContext } from '../../context/context'
+import { Hotel } from '../../typings'
+import { priceFormatter, saveHotelOnLocalStorage } from '../../utils/functions'
 
 const Feed = ({ hotel }: Hotel) => {
   const router = useRouter()
@@ -46,6 +46,7 @@ const Feed = ({ hotel }: Hotel) => {
         onClick={showHotel}
       >
         <Image
+          alt={hotel_name}
           src={max_photo_url}
           layout="fill"
           objectFit="cover"

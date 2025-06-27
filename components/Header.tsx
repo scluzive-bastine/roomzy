@@ -1,14 +1,13 @@
-import Link from 'next/link'
-import { HiOutlineUser } from 'react-icons/hi'
-import { FiSearch } from 'react-icons/fi'
-import { RiMenu5Line } from 'react-icons/ri'
-import logo from '../images/logo.svg'
 import Image from 'next/image'
-import { useState } from 'react'
-import NavDropdown from './mobile/NavDropdown'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { FiSearch } from 'react-icons/fi'
+import { HiOutlineUser } from 'react-icons/hi'
+import { RiMenu5Line } from 'react-icons/ri'
 import { useProviderContext } from '../context/context'
-import SearchForm from '../components/SearchForm'
+import logo from '../images/logo.svg'
+import NavDropdown from './mobile/NavDropdown'
 
 const Header = () => {
   // toogle dropdown
@@ -25,7 +24,7 @@ const Header = () => {
         <div className="mx-auto flex max-w-screen-2xl items-center justify-between py-4">
           <div className="flex items-center space-x-4">
             <div className="cursor-pointer" onClick={() => router.push('/')}>
-              <Image src={logo} width="100%" height="40px" />
+              <Image alt="Logo" src={logo} width="100%" height="40px" />
             </div>
             <div className="border-l border-gray-300 pl-5">
               <ul className="hidden items-center space-x-5 md:flex">

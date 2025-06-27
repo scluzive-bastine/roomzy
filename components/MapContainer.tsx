@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
-import { Map, Marker, Popup } from 'react-map-gl'
+import getSymbolFromCurrency from 'currency-symbol-map'
 import getCenter from 'geolib/es/getCenter'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Hotels, HotelsInterface } from '../typings'
-import getSymbolFromCurrency from 'currency-symbol-map'
+import { useState } from 'react'
+import { Map, Marker } from 'react-map-gl'
+import { HotelsInterface } from '../typings'
 import { priceFormatter } from '../utils/functions'
 import MapPopUp from './MapPopUp'
 
@@ -44,7 +43,7 @@ const MapContainer = ({ feeds, showMap }: Props) => {
     <div className={`absolute top-0 left-0 z-20 h-[100vh] w-full`}>
       <Map
         mapStyle="mapbox://styles/sabastine/cl1m8vw3l00bp16rzpbmb84fz"
-        mapboxAccessToken={process.env.mapbox_key}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
         {...viewport}
         onMove={(e) => setViewport({ ...viewport, ...e })}
       >

@@ -4,20 +4,19 @@ import { FiSearch } from 'react-icons/fi'
 import Destinations from '../components/Explore/Destinations'
 import Explore from '../components/Explore/Explore'
 import Host from '../components/Explore/Host'
-import SearchForm from '../components/SearchForm'
 import { useProviderContext } from '../context/context'
 
 const Home: NextPage = () => {
-  const IMG_URL =
+  const Image_URL =
     'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670'
 
-  const img1 =
+  const Image1 =
     'https://images.unsplash.com/photo-1611602132416-da2045990f76?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
-  const img2 =
+  const Image2 =
     'https://images.unsplash.com/photo-1614846384571-1e31322ed3a9?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTIzfHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
-  const img3 =
+  const Image3 =
     'https://images.unsplash.com/photo-1563720223420-70e9835a9cb3?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI1fHxob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800'
-  const img4 =
+  const Image4 =
     'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287'
 
   const { isSearchOpen, toggleSearch } = useProviderContext()
@@ -26,7 +25,8 @@ const Home: NextPage = () => {
       <div className="relative pb-10">
         <div className="relative h-[400px] w-full rounded-3xl md:h-[400px] md:w-full xl:h-[600px]">
           <Image
-            src={IMG_URL}
+            alt="Banner"
+            src={Image_URL}
             layout="fill"
             objectFit="cover"
             className="rounded-3xl"
@@ -71,7 +71,8 @@ const Home: NextPage = () => {
         <div className="grid grid-cols-1 gap-5 pb-10 md:grid-cols-3">
           <div className="group relative h-[240px] w-full rounded-2xl md:h-[500px]">
             <Image
-              src={img1}
+              alt="Outdoor"
+              src={Image1}
               layout="fill"
               objectFit="cover"
               className="rounded-2xl"
@@ -86,7 +87,8 @@ const Home: NextPage = () => {
           <div className="flex flex-col space-y-5">
             <div className="group relative h-[240px] w-full rounded-2xl">
               <Image
-                src={img2}
+                alt="Outdoor"
+                src={Image2}
                 layout="fill"
                 objectFit="cover"
                 className="rounded-2xl"
@@ -100,7 +102,8 @@ const Home: NextPage = () => {
             </div>
             <div className="group relative h-[240px] w-full rounded-2xl">
               <Image
-                src={img3}
+                alt="Outdoor"
+                src={Image3}
                 layout="fill"
                 objectFit="cover"
                 className="rounded-lg"
@@ -115,7 +118,8 @@ const Home: NextPage = () => {
           </div>
           <div className="group relative h-[240px] w-full rounded-2xl md:h-[500px]">
             <Image
-              src={img4}
+              alt="Outdoor"
+              src={Image4}
               layout="fill"
               objectFit="cover"
               className="rounded-2xl"

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { useState } from 'react'
 import { ReviewsInterface } from '../../typings'
 import { formatDate } from '../../utils/functions'
 
@@ -29,7 +30,7 @@ const Reviews = ({ reviews }: { reviews: ReviewsInterface[] }) => {
                 </div>
               </div>
               <div className="relative">
-                <p className="text-sm text-gray-600">{review.pros}</p>
+                <ReadMoreText text={review.pros} />
               </div>
             </div>
           )
@@ -45,3 +46,86 @@ const Reviews = ({ reviews }: { reviews: ReviewsInterface[] }) => {
 }
 
 export default Reviews
+
+const ReadMoreText = ({ text }: { text: string }) => {
+  const [showDialog, setShowDialog] = useState(false)
+
+  // Check if text is longer than 3 lines (approximately 150 characters)
+  const isLongText = text.length > 150
+  const displayText = isLongText ? text.slice(0, 150) + '...' : text
+
+  return (
+    <>
+      <div className="text-sm text-gray-600">
+        <div className={`${isLongText ? 'line-clamp-3' : ''}`}>
+          {displayText}
+        </div>
+        {isLongText && (
+          <button
+            onClick={() => setShowDialog(true)}
+            className="mt-1 text-sm font-medium text-black underline "
+          >
+            Read more
+          </button>
+        )}
+      </div>
+
+      {showDialog && (
+        <ReadMoreDialog
+          text={text}
+          isOpen={showDialog}
+          onClose={() => setShowDialog(false)}
+        />
+      )}
+    </>
+  )
+}
+
+const ReadMoreDialog = ({
+  text,
+  isOpen,
+  onClose,
+}: {
+  text: string
+  isOpen: boolean
+  onClose: () => void
+}) => {
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="max-h-[80vh] w-full max-w-md overflow-y-auto rounded-lg bg-white p-6 shadow-xl">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Full Review</h3>
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 hover:bg-gray-100"
+          >
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="text-sm leading-relaxed text-gray-600">{text}</div>
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={onClose}
+            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}

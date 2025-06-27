@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import logo from '../images/logo.svg'
+import { APP_NAME } from '../utils/constants'
 
 const Footer = () => {
   const router = useRouter()
@@ -10,7 +11,9 @@ const Footer = () => {
         <div className="flex items-center justify-between py-4">
           <div className="cursor-pointer" onClick={() => router.push('/')}>
             <Image src={logo} width="100%" height="40px" />
-            <div className="text-sm text-gray-600">© 2022 Roomzy, Inc</div>
+            <div className="text-sm text-gray-600">
+              © {new Date().getFullYear()} {APP_NAME}
+            </div>
           </div>
           <button className="mt-2 rounded bg-black px-4 py-2 text-white">
             Become a host

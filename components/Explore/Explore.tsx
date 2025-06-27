@@ -9,6 +9,7 @@ const Explore = () => {
           <div className="group flex cursor-pointer space-x-2" key={id}>
             <div className="relative h-14 w-14 overflow-hidden rounded-md p-1">
               <Image
+                alt={name}
                 src={image}
                 layout="fill"
                 objectFit="cover"
