@@ -123,3 +123,7 @@ export interface ReviewsInterface {
   anonymous: string
   cons_translated: string
 }
+
+export interface ImageInterface {
+  url_max: string
+}

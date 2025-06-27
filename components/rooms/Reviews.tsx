@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState } from 'react'
 import { ReviewsInterface } from '../../typings'
 import { formatDate } from '../../utils/functions'
@@ -7,19 +6,22 @@ const Reviews = ({ reviews }: { reviews: ReviewsInterface[] }) => {
   if (reviews.length === 0) return null
 
   return (
-    <section className="flex flex-col gap-2">
-      <p className="text-lg font-bold">Reviews</p>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+    <section className="flex flex-col gap-4">
+      <p className="text-lg font-semibold">Reviews</p>
+      <div className="flex grid-cols-1 gap-5 space-x-4 divide-x divide-zinc-200 overflow-x-auto scrollbar-hide md:grid md:grid-cols-2 md:space-x-0 md:divide-x-0">
         {reviews.slice(0, 6).map((review, index) => {
           return (
-            <div className="relative flex flex-col gap-2" key={index}>
+            <div
+              className="relative flex w-4/5 shrink-0 flex-col gap-2 pl-4 first:pl-0 md:w-full md:pl-0"
+              key={index}
+            >
               <div className="flex items-center gap-2">
                 <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gradient-to-r from-zinc-100 to-zinc-300">
                   {review.author.avatar && (
-                    <Image
+                    <img
                       src={review.author.avatar}
                       alt={review.author.name}
-                      layout="fill"
+                      loading="lazy"
                       className="h-full w-full object-cover object-center"
                     />
                   )}
@@ -29,7 +31,19 @@ const Reviews = ({ reviews }: { reviews: ReviewsInterface[] }) => {
                   <p className="text-xs">{formatDate(review.date)}</p>
                 </div>
               </div>
-              <div className="relative">
+              <div className="relative flex flex-col gap-1">
+                <div className="flex items-center gap-1">
+                  <div className="relative h-6 w-6 overflow-hidden rounded-full bg-gradient-to-r from-zinc-100 to-zinc-300">
+                    <img
+                      src={review.stayed_room_info.photo.url_original}
+                      alt={review.stayed_room_info.room_name}
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
+                  <p className="text-xs font-medium">
+                    {review?.stayed_room_info?.room_name}
+                  </p>
+                </div>
                 <ReadMoreText text={review.pros} />
               </div>
             </div>

@@ -1,5 +1,4 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useProviderContext } from '../../context/context'
 import { Hotel } from '../../typings'
@@ -45,12 +44,11 @@ const Feed = ({ hotel }: Hotel) => {
         className="relative h-[200px] w-full cursor-pointer overflow-hidden rounded-xl"
         onClick={showHotel}
       >
-        <Image
+        <img
           alt={hotel_name}
           src={max_photo_url}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl transition duration-150 ease-in-out group-hover:scale-110"
+          loading="lazy"
+          className="h-full w-full rounded-xl object-cover transition duration-150 ease-in-out group-hover:scale-110"
         />
       </div>
       <div className="mt-2">
