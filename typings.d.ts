@@ -39,7 +39,15 @@ export interface HotelsInterface {
   hotel_id: number
   accommodation_type_name?: string | null
   city_name_en?: string | null
-  composite_price_breakdown?: {} | null
+  composite_price_breakdown?: {
+    gross_amount: {
+      value: number
+      currency: string
+      amount_unrounded: string
+      amount_rounded: string
+    }
+  } | null
+  review_score_word?: string | null
   country_trans?: string | null
   review_score?: number | null
   children_not_allowed?: number | null

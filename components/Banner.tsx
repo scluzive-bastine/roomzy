@@ -27,7 +27,7 @@ const Banner = () => {
             Every location is verified through in person quality inspection to
             ensure quality and design. Just look out for the{' '}
             <span className="rounded bg-orange px-2 py-1 text-sm font-semibold">
-              Pro
+              Review score
             </span>{' '}
             badge
           </p>

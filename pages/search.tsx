@@ -1,19 +1,13 @@
 import axios from 'axios'
 import { format, parseISO } from 'date-fns'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import SearchFeed from '../components/Search/SearchFeed'
-import { Loader } from '../utils/loaders/Loader'
-import { BASE_URL, HEADERS } from '../utils/constants'
-import { MdChevronLeft, MdErrorOutline } from 'react-icons/md'
-import Link from 'next/link'
-import Error from '../utils/Error'
-import MapContainer from '../components/MapContainer'
-import { HotelsInterface } from '../typings'
 import { RiMap2Fill } from 'react-icons/ri'
+import MapContainer from '../components/MapContainer'
+import SearchFeed from '../components/Search/SearchFeed'
+import { HotelsInterface } from '../typings'
+import Error from '../utils/Error'
+import { Loader } from '../utils/loaders/Loader'
 
 const search = () => {
   const router = useRouter()
@@ -42,7 +36,7 @@ const search = () => {
     axios
       .request({
         method: 'GET',
-        url: BASE_URL + 'search',
+        url: '/api/hotels/search',
         params: {
           checkout_date: formattedCheckOutDate,
           checkin_date: formattedCheckInDate,
@@ -55,7 +49,6 @@ const search = () => {
           filter_by_currency: 'USD',
           room_number: '1',
         },
-        headers: HEADERS,
       })
       .then((res) => {
         console.log(res.data)

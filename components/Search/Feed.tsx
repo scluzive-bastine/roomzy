@@ -1,8 +1,7 @@
-import getSymbolFromCurrency from 'currency-symbol-map'
 import { useRouter } from 'next/router'
 import { useProviderContext } from '../../context/context'
 import { Hotel } from '../../typings'
-import { priceFormatter, saveHotelOnLocalStorage } from '../../utils/functions'
+import { saveHotelOnLocalStorage } from '../../utils/functions'
 
 const Feed = ({ hotel }: Hotel) => {
   const router = useRouter()
@@ -41,9 +40,14 @@ const Feed = ({ hotel }: Hotel) => {
   return (
     <div className="group rounded-xl border border-gray-200 p-4">
       <div
-        className="relative h-[200px] w-full cursor-pointer overflow-hidden rounded-xl"
+        className=" relative h-[200px] w-full cursor-pointer overflow-hidden rounded-xl"
         onClick={showHotel}
       >
+        <Rating
+          review_score={hotel.review_score || 0}
+          review_score_word={hotel.review_score_word || ''}
+          review_nr={hotel.review_nr || 0}
+        />
         <img
           alt={hotel_name}
           src={max_photo_url}
@@ -58,8 +62,7 @@ const Feed = ({ hotel }: Hotel) => {
         <span className="text-xs text-gray-500">{distanceFromCityCenter}</span>
         <div>
           <h1 className="mt-2 font-semibold">
-            {getSymbolFromCurrency(currency_code)}
-            {priceFormatter(min_total_price)}{' '}
+            {hotel.composite_price_breakdown?.gross_amount.amount_rounded}{' '}
             <span className="text-sm font-normal text-gray-500">night</span>
           </h1>
         </div>
@@ -69,3 +72,19 @@ const Feed = ({ hotel }: Hotel) => {
 }
 
 export default Feed
+
+const Rating = ({
+  review_score,
+}: {
+  review_score: number
+  review_score_word: string
+  review_nr: number
+}) => {
+  return (
+    <div className=" absolute top-2 right-2 z-20 rounded-md bg-orange p-2">
+      <div className="flex gap-2">
+        <p className="text-xs text-white">{review_score.toFixed(1)}</p>
+      </div>
+    </div>
+  )
+}

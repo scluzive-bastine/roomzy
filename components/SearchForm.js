@@ -1,20 +1,18 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Transition, Dialog, Popover } from '@headlessui/react'
-import { useProviderContext } from '../context/context'
-import { DateRangePicker } from 'react-date-range'
+import { Dialog, Popover, Transition } from '@headlessui/react'
 import { format } from 'date-fns'
+import { Fragment, useEffect, useState } from 'react'
+import { DateRangePicker } from 'react-date-range'
 import { FiMinus, FiPlus, FiSearch } from 'react-icons/fi'
-import { MdOutlineLocationOn } from 'react-icons/md'
+import { useProviderContext } from '../context/context'
 
+import axios from 'axios'
+import { addDays } from 'date-fns'
+import { useRouter } from 'next/router'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
-import { useRouter } from 'next/router'
-import axios from 'axios'
-import { BASE_URL, HEADERS } from '../utils/constants'
 import { DebounceInput } from 'react-debounce-input'
 import { LocationsLoader } from '../utils/loaders/Loader'
 import LocationsList from './Search/LocationsList'
-import { addDays } from 'date-fns'
 
 const SearchForm = () => {
   const router = useRouter()
@@ -84,15 +82,13 @@ const SearchForm = () => {
     axios
       .request({
         method: 'GET',
-        url: BASE_URL + 'locations',
+        url: '/api/locations',
         params: {
           locale: 'en-gb',
           name: searchQuery.location,
         },
-        headers: HEADERS,
       })
       .then((res) => {
-        console.log(res.data)
         setLocations(res.data)
       })
       .catch((err) => console.log(err))
