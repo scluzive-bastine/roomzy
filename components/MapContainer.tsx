@@ -47,27 +47,30 @@ const MapContainer = ({ feeds, showMap }: Props) => {
         {...viewport}
         onMove={(e) => setViewport({ ...viewport, ...e })}
       >
-        {feeds?.map((hotel: HotelsInterface) => (
-          <div key={hotel.hotel_id}>
-            <Marker longitude={hotel.longitude} latitude={hotel.latitude}>
-              <button
-                className="w-auto rounded-2xl bg-white px-3 py-1 text-sm font-semibold transition duration-150 ease-in-out hover:scale-110"
-                onClick={() => setSelectedLocation(hotel)}
-              >
-                {getSymbolFromCurrency(hotel.currencycode)}
-                {priceFormatter(hotel.min_total_price)}
-              </button>
-            </Marker>
-            {selectedLocation.longitude === hotel.longitude ? (
-              <MapPopUp
-                hotel={hotel}
-                setSelectedLocation={setSelectedLocation}
-              />
-            ) : (
-              false
-            )}
-          </div>
-        ))}
+        {feeds?.map((hotel: HotelsInterface) => {
+          // console.log('hotel:', hotel.address)
+          return (
+            <div key={hotel.hotel_id}>
+              <Marker longitude={hotel.longitude} latitude={hotel.latitude}>
+                <button
+                  className="w-auto rounded-2xl bg-white px-3 py-1 text-sm font-semibold transition duration-150 ease-in-out hover:scale-110"
+                  onClick={() => setSelectedLocation(hotel)}
+                >
+                  {getSymbolFromCurrency(hotel.currencycode)}
+                  {priceFormatter(hotel.min_total_price)}
+                </button>
+              </Marker>
+              {selectedLocation.longitude === hotel.longitude ? (
+                <MapPopUp
+                  hotel={hotel}
+                  setSelectedLocation={setSelectedLocation}
+                />
+              ) : (
+                false
+              )}
+            </div>
+          )
+        })}
       </Map>
     </div>
   )
